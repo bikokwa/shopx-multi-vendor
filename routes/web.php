@@ -13,6 +13,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /** Profile Routes */
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
 });
 
 
