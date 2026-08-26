@@ -18,17 +18,17 @@
                                         <div class="heading_s1 mb-4">
                                             <h4 class="mb-5">Kyc Verification</h4>
                                         </div>
-                                        <form method="post" action="{{ route('login') }}">
+                                        <form method="post" action="{{ route('kyc.store') }}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="" class="font-weight-bold">Full name <span class="text-danger">*</span></label>
+                                                <label for="" class="font-weight-bold">Full Name <span class="text-danger">*</span></label>
                                                 <input type="text" required="" name="full_name" placeholder="" />
                                                 <x-input-error :messages="$errors->get('full_name')" class="mt-2" />
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="" class="font-weight-bold">Date of birth <span class="text-danger">*</span></label>
-                                                <input type="text" required="" name="date_of_birth" placeholder="1990/7/9" />
+                                                <input type="text" class="datepicker" required="" name="date_of_birth" placeholder="1990/7/9" />
                                                 <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
                                             </div>
 
