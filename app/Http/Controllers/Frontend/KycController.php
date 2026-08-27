@@ -29,8 +29,14 @@ class KycController extends Controller
             'document_scan_copy' => ['required', 'mimes:jpg,jpeg,png,pdf,csv,docx', 'max:10000'],
         ]);
 
-        $kyc = new Kyc();
+        if (Kyc::where('user_id', auth('web')->user()->id)->exists()) {
+            $kyc = Kyc::where('user_id', auth('web')->user()->id)->first();
+        } else {
+            $kyc = new Kyc();
+        }
+
         $kyc->user_id = auth('web')->user()->id;
+        $kyc->status = 'pending';
         $kyc->full_name = $request->full_name;
         $kyc->date_of_birth = $request->date_of_birth;
         $kyc->gender = $request->gender;
