@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kyc;
 use App\Services\AlertService;
+use App\Services\MailService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,6 +31,20 @@ class KycRequestController extends Controller
         $kyc_request->update([
             'status' => $request->status
         ]);
+
+        if ($kyc_request->status === 'approved') {
+            MailService::send(
+                to: $kyc_request->user->email,
+                subject: 'KYC Application Has Been Approved',
+                body: 'Congratulations! Your KYC request has been approved.'
+            );
+        } elseif ($kyc_request->status === 'rejected') {
+            MailService::send(
+                to: $kyc_request->user->email,
+                subject: 'KYC Application Has Been Rejected',
+                body: 'Sorry! Your KYC request has been rejected.'
+            );
+        }
         AlertService::updated();
         return redirect()->route('admin.kyc.index');
     }
