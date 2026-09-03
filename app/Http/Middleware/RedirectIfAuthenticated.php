@@ -49,7 +49,7 @@ class RedirectIfAuthenticated
     /**
      * Get the path the user should be redirected to when they are authenticated.
      */
-    protected function redirectTo(Request $request, string $guard = 'web'): ?string
+    protected function redirectTo(Request $request, string|null $guard = 'web'): ?string
     {
         return static::$redirectToCallback
             ? call_user_func(static::$redirectToCallback, $request)
@@ -59,7 +59,7 @@ class RedirectIfAuthenticated
     /**
      * Get the default URI the user should be redirected to when they are authenticated.
      */
-    protected function defaultRedirectUri(string $guard): string
+    protected function defaultRedirectUri(string|null $guard): string
     {
         if ($guard === 'admin') {
             return route('admin.dashboard');
