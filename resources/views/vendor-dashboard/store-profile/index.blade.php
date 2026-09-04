@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('vendor-dashboard.layouts.app')
 
 @section('contents')
 <div class="container-xl">
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Update Profile</h3>
+      <h3 class="card-title">Update Store Profile</h3>
     </div>
     <div class="card-body">
         <form action="{{ route('vendor.store-profile.update', 1) }}" method="POST">
@@ -14,69 +14,69 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Logo</label>
-                    <x-input-image imageUploadId="image-upload" imagePreviewId="image-preview" imageLabelId="image-label" name="avatar" />
-                    <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
+                    <x-input-image imageUploadId="image-upload" imagePreviewId="image-preview" imageLabelId="image-label" name="logo" :image="asset($store?->logo)" />
+                    <x-input-error :messages="$errors->get('logo')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Banner</label>
-                    <x-input-image imageUploadId="image-upload-two" imagePreviewId="image-preview-two" imageLabelId="image-label-two" name="avatar" />
-                    <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
+                    <x-input-image imageUploadId="image-upload-two" imagePreviewId="image-preview-two" imageLabelId="image-label-two" name="banner" :image="asset($store?->banner)" />
+                    <x-input-error :messages="$errors->get('banner')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="mb-3">
-                    <label class="form-label required">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="" value="" />
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="" value="{{ $store?->name }}" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label required">Phone</label>
-                    <input type="text" class="form-control" name="phone" placeholder="" value="" />
+                    <label class="form-label">Phone</label>
+                    <input type="text" class="form-control" name="phone" placeholder="" value="{{ $store?->phone }}" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label required">Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="" value="" />
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="" value="{{ $store?->email }}" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label required">Address</label>
-                    <input type="text" class="form-control" name="address" placeholder="" value="" />
+                    <label class="form-label">Address</label>
+                    <input type="text" class="form-control" name="address" placeholder="" value="{{ $store?->address }}" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="mb-3">
-                    <label class="form-label required">Short Description</label>
-                    <textarea class="form-control" name="short_description"></textarea>
+                    <label class="form-label">Short Description</label>
+                    <textarea class="form-control" name="short_description">{{ $store?->short_description }}</textarea>
                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="mb-3">
-                    <label class="form-label required">Long Description</label>
-                    <textarea id="editor" class="form-control" name="long_description"></textarea>
+                    <label class="form-label">Long Description</label>
+                    <textarea id="editor" class="form-control" name="long_description">{{ $store?->long_description }}</textarea>
                     <x-input-error :messages="$errors->get('long_description')" class="mt-2" />
                 </div>
             </div>
 
           </div>
-          <button type="submit" class="btn btn-primary">Update Account</button>
+          <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
   </div>

@@ -5,9 +5,7 @@
     plugins: [
         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-        'insertdatetime', 'media', 'table', 'help', 'wordcount',
-        /* Premium plugins for demo purposes only */
-        'mediaembed',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount'
     ],
     toolbar: 'undo redo | blocks | ' +
     'bold italic backcolor | alignleft aligncenter ' +
