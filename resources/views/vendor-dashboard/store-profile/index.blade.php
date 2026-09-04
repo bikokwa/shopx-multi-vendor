@@ -11,24 +11,62 @@
             @csrf
             @method('PUT')
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="mb-3">
+                    <label class="form-label">Logo</label>
                     <x-input-image id="image-preview" name="avatar" />
                     <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
                 </div>
             </div>
 
-            <div class="col-md-9">
-                <div class="col-md-12">
-                    <div class="mb-3">
-                        <label class="form-label required">Name</label>
-                        <input type="text" class="form-control" name="name" placeholder="" value="" />
-                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                    </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Banner</label>
+                    <x-input-image id="image-preview" name="avatar" />
+                    <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
                 </div>
-
-
             </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="form-label required">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="" value="" />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label required">Phone</label>
+                    <input type="text" class="form-control" name="phone" placeholder="" value="" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label required">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="" value="" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="form-label required">Short Description</label>
+                    <textarea class="form-control" name="short_description"></textarea>
+                    <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="form-label required">Long Description</label>
+                    <textarea id="editor" class="form-control" name="long_description"></textarea>
+                    <x-input-error :messages="$errors->get('long_description')" class="mt-2" />
+                </div>
+            </div>
+
           </div>
           <button type="submit" class="btn btn-primary">Update Account</button>
         </form>
