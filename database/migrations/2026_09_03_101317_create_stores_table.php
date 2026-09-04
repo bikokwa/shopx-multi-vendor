@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('logo')->default('/default/shop.png');
             $table->string('banner')->default('/default/banner.png');
             $table->string('name');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->string('short_description')->nullable();
             $table->text('long_description')->nullable();
 
