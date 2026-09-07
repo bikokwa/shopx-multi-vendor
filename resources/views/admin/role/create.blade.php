@@ -17,7 +17,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="">
+                <form action="{{ route('admin.role.store') }}" method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
@@ -43,6 +44,9 @@
                         @endforeach
                     </div>
                 </form>
+            </div>
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-primary" onclick="$('form').submit()">Create</button>
             </div>
         </div>
     </div>
