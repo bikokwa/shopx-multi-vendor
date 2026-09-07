@@ -23,43 +23,28 @@
                         <tr>
                           <th>No.</th>
                           <th>Role Name</th>
-                          <th>Description</th>
                           <th>Permissions</th>
                           <th class="w-1"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @foreach ($kycRequests as $kycRequest)
+                        @foreach ($roles as $role)
                           <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $kycRequest->full_name }}</td>
-                            <td class="text-secondary">{{ $kycRequest->user->email }}</td>
-                            <td class="text-secondary">{{ $kycRequest->date_of_birth }}</td>
-                            <td class="text-secondary">{{ $kycRequest->gender }}  </td>
+                            <td>{{ $role->name }}</td>
+                            <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
                             <td>
-                                @if ($kycRequest->status == 'pending')
-                                    <span class="badge bg-warning me-1"></span> Pending
-                                @elseif ($kycRequest->status == 'approved')
-                                    <span class="badge bg-success me-1"></span> Approved
-                                @elseif ($kycRequest->status == 'rejected')
-                                    <span class="badge bg-danger me-1"></span> Rejected
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.kyc.show', $kycRequest) }}">View</a>
-                            </td>
-                            <td>
-                                <a href="">Edit</a>
+                              <a href="{{ route('admin.role.edit', $role) }}">Edit</a>
                             </td>
                           </tr>
-                        @endforeach --}}
+                        @endforeach
                       </tbody>
                     </table>
                   </div>
                   <div class="card-footer">
-                    {{-- {{ $kycRequests->links() }} --}}
                   </div>
             </div>
         </div>
     </div>
 @endsection
+
