@@ -22,27 +22,33 @@
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>Role Name</th>
-                          <th>Permissions</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Role</th>
                           <th class="w-1"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @forelse ($roles as $role)
+                        @forelse ($admins as $admin)
                           <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
+                            <td>{{ $admin->name }}</td>
+                            <td>{{ $admin->email }}</td>
                             <td>
-                              <a href="{{ route('admin.role.edit', $role) }}">Edit</a>
-                              <a href="{{ route('admin.role.destroy', $role) }}" class="text-danger delete-item">Delete</a>
+                              @foreach ($admin->getRoleNames() as $role)
+                                <span class="badge bg-primary-lt">{{ $role }}</span>
+                              @endforeach
+                            </td>
+                            <td>
+                              <a href="{{ route('admin.role-user.edit', $admin) }}">Edit</a>
+                              <a href="{{ route('admin.role-user.destroy', $admin) }}" class="text-danger delete-item">Delete</a>
                             </td>
                           </tr>
                         @empty
                           <tr>
                             <td colspan="4" class="text-center">No Roles</td>
                           </tr>
-                        @endforelse --}}
+                        @endforelse
                       </tbody>
                     </table>
                   </div>

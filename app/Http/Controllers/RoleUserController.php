@@ -16,7 +16,8 @@ class RoleUserController extends Controller
      */
     public function index(): View
     {
-        return view('admin.role-user.index');
+        $admins = Admin::all();
+        return view('admin.role-user.index', compact('admins'));
     }
 
     /**
@@ -65,15 +66,17 @@ class RoleUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Admin $role_user): View
     {
-        //
+        $admin = $role_user;
+        $roles = Role::all();
+        return view('admin.role-user.edit', compact('admin', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
     }
