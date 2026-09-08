@@ -10,4 +10,8 @@ class AlertService {
     public static function created($message = null){
         notyf()->success($message ? $message : 'Created Successfully');
     }
+
+    public static function deleted(): void{
+        notyf()->success('Deleted Successfully');
+    }
 }

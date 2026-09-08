@@ -4,7 +4,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Roles</h3>
+                <h3 class="card-title">Create Role</h3>
                 <div class="card-actions">
                     <a href="{{ route('admin.role.create') }}" class="btn btn-primary btn-3">
                     <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
