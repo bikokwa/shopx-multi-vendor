@@ -19,6 +19,7 @@
             <div class="card-body">
                 <form action="{{ route('admin.role-user.update', $admin) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
