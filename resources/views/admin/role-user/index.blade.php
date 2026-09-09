@@ -40,8 +40,10 @@
                               @endforeach
                             </td>
                             <td>
-                              <a href="{{ route('admin.role-user.edit', $admin) }}">Edit</a>
-                              <a href="{{ route('admin.role-user.destroy', $admin) }}" class="text-danger delete-item">Delete</a>
+                              @if (!$admin->hasRole('Super Admin'))
+                                <a href="{{ route('admin.role-user.edit', $admin) }}">Edit</a>
+                                <a href="{{ route('admin.role-user.destroy', $admin) }}" class="text-danger delete-item">Delete</a>
+                              @endif
                             </td>
                           </tr>
                         @empty

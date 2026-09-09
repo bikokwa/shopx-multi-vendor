@@ -55,6 +55,7 @@
                                 <select class="form-control" name="role">
                                     <option value="">Select Role</option>
                                     @foreach ($roles as $role)
+                                        @if ($role->name == 'Super Admin') @continue @endif
                                         <option @selected(in_array($role->name, $admin->getRoleNames()->toArray())) value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
