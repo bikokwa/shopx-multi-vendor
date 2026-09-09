@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Services\AlertService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class RoleUserController extends Controller
@@ -108,8 +110,19 @@ class RoleUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Admin $role_user):JsonResponse
     {
-        //
+        try {
+            // remove roles from user
+            foreach ($role_user->getRoleNames() as $role) {
+                $role_user->removeRole($role);
+            }
+            $role_user->delete();
+            AlertService::deleted();
+            return response()->json(['status' => 'success', 'message' => 'Deleted successfully.']);
+        } catch (\Throwable $th) {
+            Log::error('Role Delete Error: ', $th);
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()]);
+        }
     }
 }
