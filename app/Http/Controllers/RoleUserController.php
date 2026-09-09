@@ -8,11 +8,18 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class RoleUserController extends Controller
+class RoleUserController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array {
+        return [
+            new Middleware('permission:Role User Management'),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
