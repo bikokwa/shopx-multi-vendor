@@ -5,19 +5,19 @@ namespace App\Services;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 
-class SettingService {
-    function getSettings() {
+class SettingsService {
+    public function getSettings() {
         return Cache::rememberForever('settings', function() {
             return Setting::pluck('value', 'key')->toArray();
         });
     }
 
-    function setSettings() {
+    public function setSettings() {
         $settings = $this->getSettings();
         config()->set('settings', $settings);
     }
 
-    function clearCachedSettings() {
+    public function clearCachedSettings() {
         Cache::forget('settings');
     }
 }
