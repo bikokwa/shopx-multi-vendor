@@ -12,6 +12,9 @@
     <!-- END PAGE LEVEL STYLES -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="{{ asset('assets/global/upload-preview.css') }}" rel="stylesheet" />
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.46.0/dist/tabler-icons.min.css" />
     <link href="{{ asset('assets/admin/dist/css/tabler.css') }}" rel="stylesheet" />
 
     <!-- BEGIN CUSTOM FONT -->
