@@ -24,6 +24,6 @@ class CategoryController extends Controller
         $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position')+1;
         $category = Category::create($data);
 
-        return response()->json(['success' => true, 'category' => $category]);
+        return response()->json(['success' => true, 'message' => 'category created successfully', 'category' => $category]);
     }
 }

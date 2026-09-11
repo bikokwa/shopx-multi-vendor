@@ -15,6 +15,7 @@
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.46.0/dist/tabler-icons.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link href="{{ asset('assets/admin/dist/css/tabler.css') }}" rel="stylesheet" />
 
     <!-- BEGIN CUSTOM FONT -->
@@ -67,6 +68,7 @@
     <script src="{{ asset('assets/global/upload-preview.min.js') }}"></script>
     <script src="{{ asset('assets/admin/dist/js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="{{ asset('assets/admin/dist/js/tabler.min.js') }}" defer></script>
     @include('admin.layouts.scripts')
     @stack('scripts')

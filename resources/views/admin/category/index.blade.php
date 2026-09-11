@@ -75,13 +75,27 @@
                     method: method,
                     data: data,
                     success: function (response) {
-                        console.log(response);
+                        clearForm();
+
+                        notyf.success(response.message);
                     },
                     error: function (xhr, status, error) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function(key, value) {
+                            notyf.error(errors[key][0]);
+                        });
 
                     }
                 });
             });
+
+            // clear form
+            function clearForm() {
+                $('#name').val('');
+                $('#slug').val('');
+                $('#parent_id').val('');
+                $('#is_active').prop('checked', true);
+            }
         });
     </script>
 @endpush
