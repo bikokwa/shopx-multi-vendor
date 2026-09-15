@@ -90,6 +90,7 @@ Route::middleware('auth:admin')
     /** Categories Routes */
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/nested', [CategoryController::class, 'getNestedCategories'])->name('categories.nested');
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

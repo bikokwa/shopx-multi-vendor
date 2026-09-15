@@ -89,13 +89,38 @@
                 });
             });
 
+            // Load parent dropdown
+            function loadParentDropdown(selectedId, excludeId) {
+                $.get("{ route('admin.categories.nested')}", function(data) {
+                    let options = '<option value="">None (Root)</option>';
+
+                    function addOptions(cats, prefix, depth) {
+                        cats.forEach(function(cat) {
+                            if (cat.id == excludeId) return;
+                            options += `<option value="${cat.id}" ${selectedId == cat.id ? 'selected' : ''}>${prefix}${cat.name}</option>`;
+                            if (cat.children_nested && cat.children_nested.length) {
+                                addOptions(cat.children_nested, prefix + ' -- ', depth + 1);
+                            }
+                        })
+                    }
+
+                    addOptions(data, '', 0);
+
+                    $('#parent_id').html(options);
+                })
+            }
+
             // clear form
             function clearForm() {
                 $('#name').val('');
                 $('#slug').val('');
                 $('#parent_id').val('');
                 $('#is_active').prop('checked', true);
+                loadParentDropdown(null, null);
             }
+
+            // Initial Load
+            clearForm();
         });
     </script>
 @endpush
