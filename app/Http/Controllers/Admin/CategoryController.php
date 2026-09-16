@@ -74,4 +74,9 @@ class CategoryController extends Controller
             }
         }
     }
+
+    public function show(int $id) {
+        $category = Category::findOrFail($id);
+        return response()->json($category);
+    }
 }

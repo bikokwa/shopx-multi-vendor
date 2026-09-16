@@ -88,6 +88,7 @@
                     <div class="card-header"><span>Create Category</span></div>
                     <div class="card-body">
                         <form id="category-form" action="">
+                            <input type="hidden" id="category-id" />
                             <div class="mb-2">
                                 <label for="" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" class="form-control" required id="name">
@@ -110,7 +111,7 @@
                             </div>
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
-                                <button type="button" class="btn btn-danger" id="btn-delete">Delete</button>
+                                <button type="button" class="btn btn-danger d-none" id="btn-delete">Delete</button>
                                 <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
                             </div>
                         </form>
@@ -222,7 +223,7 @@
 
             // Load parent dropdown
             function loadParentDropdown(selectedId, excludeId) {
-                $.get("{ route('admin.categories.nested')}", function(data) {
+                $.get("{{ route('admin.categories.nested') }}", function(data) {
                     let options = '<option value="">None (Root)</option>';
 
                     function addOptions(cats, prefix, depth) {
@@ -239,6 +240,23 @@
 
                     $('#parent_id').html(options);
                 })
+            }
+
+            $(document).off('click', '.cat-label').on('click', '.cat-label', function(e) {
+                e.stopPropagation();
+                let id = $(this).data('id');
+                $.get("{{ route('admin.categories.show', ':id') }}".replace(':id', id), function(cat) {
+                    fillForm(cat);
+                });
+            });
+
+            function fillForm(cat) {
+                $('#name').val(cat.name);
+                $('#slug').val(cat.slug);
+                $('#is_active').prop('checked', cat.is_active);
+                loadParentDropdown(cat.parent_id, cat.id);
+                $('#category-id').val(cat.id);
+                $('#btn-delete').removeClass('d-none');
             }
 
             // clear form
