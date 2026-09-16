@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -36,7 +38,7 @@ class CategoryController extends Controller
             }
         }
 
-        $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position')+1;
+        $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position') + 1;
         $category = Category::create($data);
 
         return response()->json(['success' => true, 'message' => 'category created successfully', 'category' => $category]);
@@ -45,5 +47,31 @@ class CategoryController extends Controller
     public function getNestedCategories() {
         $categories = Category::getNested();
         return response()->json($categories);
+    }
+
+    public function updateOrder(Request $request) {
+        $tree = $request->tree;
+        try {
+            DB::transaction(function() use ($tree) {
+                $this->updateTree($tree, null);
+            });
+            return response()->json(['success' => true, 'message' => 'Category order updated successfully']);
+        } catch(\Throwable $th) {
+            Log::error('Category order Update Error: ', $th);
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
+    function updateTree($nodes, $parentId) {
+        foreach($nodes as $position => $node) {
+            $category = Category::find($node['id']);
+            $category->update([
+                'parent_id' => $parentId,
+                'position' => $position
+            ]);
+            if (isset($node['children']) && is_array($node['children'])) {
+                $this->updateTree($node['children'], $category->id);
+            }
+        }
     }
 }
