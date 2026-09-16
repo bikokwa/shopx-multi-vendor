@@ -77,7 +77,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <div id="tree-loading" class="text-center my-2">
+                        <div id="tree-loading" class="text-center my-2 d-none">
                             <div class="spinner-border"></div>
                         </div>
                     </div>
@@ -124,6 +124,50 @@
 @push('scripts')
     <script>
         $(function() {
+            function loadTree() {
+                $('#tree-loading').show();
+                $.get("{{ route('admin.categories.nested') }}", function(data) {
+                    $('#category-tree').empty();
+                    var html = '<div class="dd" id="nestable-tree">' + renderTree(data) + '</div>';
+                    $('#category-tree').html(html);
+                    $('#nestable-tree').nestable({
+                        maxDepth: 3
+                    }).off('change').on('change', function(e) {
+                        if (!$(e.target).hasClass('no-drag')) {
+                            console.log(e);
+                        }
+                    });
+                    $('#tree-loading').hide();
+                })
+            }
+
+            function renderTree(categories) {
+                if (!categories.length) return;
+                let html = '<ol class="dd-list" style="margin-bottom: 0">';
+
+                categories.forEach(function(cat) {
+                    html += `<li class="dd-item custom-cat-item" data-id="">
+                                <div class="dd-item-row custom-cat-row">
+                                    <div class="dd-handle custom-cat-handle" title="Drag to reorder">
+                                        <i class="ti ti-grip-horizontal"></i>
+                                    </div>
+                                    <i class="ti ti-folder cat-folder-icon"></i>
+                                    <div class="cat-label custom-cat-label" data-id="">
+                                        <span>${ cat.name }</span>
+                                        ${cat.is_active ? '<span class="text-success ms-2" style="font-size: 10px">&#9679</span>' : '<span class="text-danger ms-2" style="font-size: 10px">&#9679</span>'}
+                                    </div>
+                                </div>`;
+                    if (cat.children_nested && cat.children_nested.length) {
+                        html += renderTree(cat.children_nested);
+                    }
+                    html += `</li>`;
+                });
+
+                html += `</ol>`;
+
+                return html;
+            }
+
             $('#category-form').submit(function(e) {
                 e.preventDefault();
                 let method = 'POST';
@@ -187,6 +231,7 @@
 
             // Initial Load
             clearForm();
+            loadTree();
         });
     </script>
 @endpush
