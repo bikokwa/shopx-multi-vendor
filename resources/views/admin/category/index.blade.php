@@ -288,6 +288,20 @@
                 });
             });
 
+            // slug auto-generate
+            $('#name').on('input', function() {
+                if (!$('#category-id').val()) {
+                    $('#slug').val(slugify($(this).val()));
+                }
+            });
+
+            function slugify(text) {
+                return text.toString().toLowerCase().replace(/\s+/g, '-')
+                .replace(/[^a-z0-9\-]/g, '')
+                .replace(/\-+/g, '-')
+                .replace(/^\-+|\-+$/g, '');
+            }
+
             function fillForm(cat) {
                 $('#category-title').text('Edit Category');
                 $('#name').val(cat.name);
