@@ -126,7 +126,7 @@
     <script>
         $(function() {
             function loadTree() {
-                $('#tree-loading').show();
+                $('#tree-loading').removeClass('d-none');
                 $.get("{{ route('admin.categories.nested') }}", function(data) {
                     $('#category-tree').empty();
                     var html = '<div class="dd" id="nestable-tree">' + renderTree(data) + '</div>';
@@ -139,7 +139,7 @@
                             updateOrder();
                         }
                     });
-                    $('#tree-loading').hide();
+                    $('#tree-loading').addClass('d-none');
                 })
             }
 
