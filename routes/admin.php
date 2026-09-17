@@ -94,6 +94,7 @@ Route::middleware('auth:admin')
     Route::post('/categories/update-order', [CategoryController::class, 'updateOrder'])->name('categories.update-order');
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
