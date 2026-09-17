@@ -49,6 +49,14 @@
             gap: 2px;
             flex: 1 1 auto;
         }
+
+        .dd-list .dd-list {
+            padding-left: 50px;
+        }
+
+        .dd-item-row {
+            margin-bottom: 10px;
+        }
     </style>
 @endpush
 
