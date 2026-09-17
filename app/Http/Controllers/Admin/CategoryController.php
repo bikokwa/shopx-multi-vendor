@@ -105,8 +105,8 @@ class CategoryController extends Controller
             }
         }
 
-        $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position') + 1;
-        $data['is_active'] = $request->has('is_active');
+
+        $data['is_active'] = $data['is_active'] ?? false;
         $category->update($data);
         return response()->json(['success' => true, 'message' => 'category updated successfully', 'category' => $category]);
     }
