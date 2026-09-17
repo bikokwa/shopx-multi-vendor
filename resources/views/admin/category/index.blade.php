@@ -59,7 +59,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Categories</span>
-                        <button class="btn btn-primary">New</button>
+                        <button class="btn btn-primary" id="btn-new">New</button>
                     </div>
                     <div class="card-body">
                         <div id="category-tree" class="dd">
@@ -85,7 +85,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"><span>Create Category</span></div>
+                    <div class="card-header"><span id="category-title">Create Category</span></div>
                     <div class="card-body">
                         <form id="category-form" action="">
                             <input type="hidden" id="category-id" />
@@ -289,6 +289,7 @@
             });
 
             function fillForm(cat) {
+                $('#category-title').text('Edit Category');
                 $('#name').val(cat.name);
                 $('#slug').val(cat.slug);
                 $('#is_active').prop('checked', cat.is_active);
@@ -299,6 +300,7 @@
 
             // clear form
             function clearForm() {
+                $('#category-title').text('Create Category');
                 $('#name').val('');
                 $('#slug').val('');
                 $('#parent_id').val('');
@@ -307,6 +309,14 @@
                 $('#category-id').val('');
                 $('#btn-delete').addClass('d-none');
             }
+
+            $('#btn-new').on('click', function() {
+                clearForm();
+            });
+
+            $('#btn-cancel').on('click', function() {
+                clearForm();
+            });
 
             // Initial Load
             clearForm();
