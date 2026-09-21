@@ -832,6 +832,11 @@
                                     Categories
                                 </a>
                             </div>
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
+                                    Product Tags
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </li>
