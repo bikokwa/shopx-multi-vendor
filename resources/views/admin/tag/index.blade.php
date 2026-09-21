@@ -22,29 +22,38 @@
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>Role Name</th>
-                          <th>Permissions</th>
-                          <th class="w-1"></th>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th class="w-100px"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @forelse ($roles as $role)
+                        @forelse ($tags as $tag)
                           <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $role->name }}</td>
-                            <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
+                            <td>{{ $tag->name }}</td>
                             <td>
-                              @if ($role->name != 'Super Admin')
-                                <a href="{{ route('admin.role.edit', $role) }}">Edit</a>
-                                <a href="{{ route('admin.role.destroy', $role) }}" class="text-danger delete-item">Delete</a>
-                              @endif
+                                @if ($tag->is_active == 1)
+                                    <span class="badge bg-primary-lt">Active</span>
+                                @else
+                                    <span class="badge bg-danger-lt">Inactive</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('admin.role.edit', $tag) }}">
+                                    <i class="ti ti-edit"></i>
+                                </a>
+                                <a href="{{ route('admin.role.destroy', $tag) }}" class="text-danger delete-item">
+                                    <i class="ti ti-trash"></i>
+                                </a>
+
                             </td>
                           </tr>
                         @empty
                           <tr>
-                            <td colspan="4" class="text-center">No Roles</td>
+                            <td colspan="4" class="text-center">No Tags</td>
                           </tr>
-                        @endforelse --}}
+                        @endforelse
                       </tbody>
                     </table>
                   </div>

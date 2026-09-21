@@ -20014,7 +20014,7 @@ label[for=floating-input] {
 }
 
 /**
-Forms on mobile devices 
+Forms on mobile devices
   */
 @media (max-width: 575.98px) {
   .form-control,
@@ -24923,3 +24923,12 @@ Antialiasing
 }
 
 /*# sourceMappingURL=tabler.css.map */
+
+/** Custom css */
+.w-100px {
+    width: 100px !important;
+}
+
+i {
+    font-size: 22px !important;
+}
