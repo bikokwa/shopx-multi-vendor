@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
+use App\Services\AlertService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -29,7 +32,19 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:tags,name'],
+        ]);
+
+        $tag = new Tag();
+        $tag->name = $request->name;
+        $tag->slug = Str::slug($request->name);
+        $tag->is_active = $request->has('status') ? 1 : 0;
+        $tag->save();
+
+        AlertService::created();
+
+        return redirect()->route('admin.tags.index');
     }
 
     /**
