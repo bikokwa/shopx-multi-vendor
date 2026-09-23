@@ -51,7 +51,7 @@
                           </tr>
                         @empty
                           <tr>
-                            <td colspan="4" class="text-center">No Tags</td>
+                            <td colspan="4" class="text-center">No Tags Available</td>
                           </tr>
                         @endforelse
                       </tbody>
