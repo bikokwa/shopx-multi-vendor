@@ -40,10 +40,10 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.role.edit', $tag) }}">
+                                <a href="{{ route('admin.tags.edit', $tag) }}">
                                     <i class="ti ti-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.role.destroy', $tag) }}" class="text-danger delete-item">
+                                <a href="{{ route('admin.tags.destroy', $tag) }}" class="text-danger delete-item">
                                     <i class="ti ti-trash"></i>
                                 </a>
 
