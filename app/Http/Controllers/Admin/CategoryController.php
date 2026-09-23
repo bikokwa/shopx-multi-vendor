@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasMiddleware
 {
+    static function Middleware():array {
+        return [
+            new Middleware('permission:Category Management')
+        ];
+    }
     public function index():View {
         return view('admin.category.index');
     }

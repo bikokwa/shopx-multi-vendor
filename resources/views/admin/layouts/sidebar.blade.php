@@ -811,7 +811,8 @@
                 </a>
               </li>
 
-              <li class="nav-item dropdown">
+              @if (hasPermission(['Category Management', 'Tags Management']))
+                <li class="nav-item dropdown">
                     <a
                     class="nav-link dropdown-toggle"
                     href="#navbar-base"
@@ -827,19 +828,24 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-menu-columns">
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('admin.categories.index') }}">
-                                    Categories
-                                </a>
-                            </div>
-                            <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
-                                    Product Tags
-                                </a>
-                            </div>
+                            @if (hasPermission(['Category Management']))
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item" href="{{ route('admin.categories.index') }}">
+                                        Categories
+                                    </a>
+                                </div>
+                            @endif
+                            @if (hasPermission(['Tags Management']))
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
+                                        Product Tags
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </li>
+              @endif
 
               @if (hasPermission(['KYC Management']))
                 <li class="nav-item dropdown">
