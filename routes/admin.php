@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TagController;
@@ -103,6 +104,9 @@ Route::middleware('auth:admin')
 
     /** Brand Routes */
     Route::resource('/brands', BrandController::class);
+
+    /** Product Routes */
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
