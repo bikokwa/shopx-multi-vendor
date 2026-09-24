@@ -2,6 +2,7 @@
     tinymce.init({
     selector: 'textarea#editor',
     height: 500,
+    license_key: 'gpl',
     plugins: [
         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
@@ -17,6 +18,7 @@
     tinymce.init({
     selector: 'textarea#short-editor',
     height: 300,
+    license_key: 'gpl',
     plugins: [
         'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
         'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
