@@ -46,7 +46,6 @@ class BrandController extends Controller implements HasMiddleware
         $request->validate([
             'brand_logo' => ['required', 'image', 'max:2048'],
             'name' => ['required', 'string', 'max:255'],
-            'is_active' => ['boolean']
         ]);
 
         $logoPath = $this->uploadFile($request->file('brand_logo'));
@@ -73,17 +72,33 @@ class BrandController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Brand $brand)
     {
-        //
+        return view('admin.brand.edit', compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'brand_logo' => ['nullable', 'image', 'max:2048'],
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $brand->name = $request->name;
+        if ($request->hasFile('brand_logo')) {
+            $logoPath = $this->uploadFile($request->file('brand_logo'), $brand->image);
+            $brand->image = $logoPath;
+        }
+        $brand->slug = Str::slug($request->name);
+        $brand->is_active = $request->has('status') ? 1 : 0;
+        $brand->save();
+
+        AlertService::updated();
+
+        return to_route('admin.brands.index');
     }
 
     /**
