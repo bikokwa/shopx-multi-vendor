@@ -22,28 +22,32 @@
                       <thead>
                         <tr>
                           <th>No.</th>
+                          <th>Logo</th>
                           <th>Name</th>
                           <th>Status</th>
                           <th class="w-100px"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @forelse ($tags as $tag)
+                        @forelse ($brands as $brand)
                           <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $tag->name }}</td>
                             <td>
-                                @if ($tag->is_active == 1)
+                                <img style="width: 30px" src="{{ asset($brand->image) }}" alt="" >
+                            </td>
+                            <td>{{ $brand->name }}</td>
+                            <td>
+                                @if ($brand->is_active == 1)
                                     <span class="badge bg-primary-lt">Active</span>
                                 @else
                                     <span class="badge bg-danger-lt">Inactive</span>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.tags.edit', $tag) }}">
+                                <a href="{{ route('admin.brands.edit', $brand) }}">
                                     <i class="ti ti-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.tags.destroy', $tag) }}" class="text-danger delete-item">
+                                <a href="{{ route('admin.brands.destroy', $brand) }}" class="text-danger delete-item">
                                     <i class="ti ti-trash"></i>
                                 </a>
 
@@ -53,12 +57,12 @@
                           <tr>
                             <td colspan="4" class="text-center">No Tags Available</td>
                           </tr>
-                        @endforelse --}}
+                        @endforelse
                       </tbody>
                     </table>
                   </div>
                   <div class="card-footer">
-                    {{-- {{ $tags->links() }} --}}
+                    {{ $brands->links() }}
                   </div>
             </div>
         </div>
