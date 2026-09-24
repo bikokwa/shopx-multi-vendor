@@ -9,10 +9,18 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class BrandController extends Controller
+class BrandController extends Controller implements HasMiddleware
 {
     use FileUploadTrait;
+
+    static function Middleware(): array {
+        return [
+            new Middleware('permission:Brand Management')
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
