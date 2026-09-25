@@ -186,10 +186,40 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="category" class="form-control" id="">
-                                    <option value="">Select a category</option>
-                                </select>
-                                <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                                <ul class="list-unstyled">
+                                    @foreach ($categories as $category)
+                                    <li>
+                                        <label for="" class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <span class="form-check-label">{{ $category->name }}</span>
+                                        </label>
+                                        @if ($category->children_nested && $category->children_nested->count() > 0)
+                                        <ul class="list-unstyled ms-4 mt-2">
+                                            @foreach($category->children_nested as $child)
+                                            <li>
+                                                <label for="" class="form-check">
+                                                    <input type="checkbox" class="form-check-input">
+                                                    <span class="form-check-label">{{ $child->name }}</span>
+                                                </label>
+                                                @if ($child->children_nested && $child->children_nested->count() > 0)
+                                                <ul class="list-unstyled ms-4 mt-2">
+                                                    @foreach($child->children_nested as $subChild)
+                                                    <li>
+                                                        <label for="" class="form-check">
+                                                            <input type="checkbox" class="form-check-input">
+                                                            <span class="form-check-label">{{ $subChild->name }}</span>
+                                                        </label>
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                                @endif
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                        @endif
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>

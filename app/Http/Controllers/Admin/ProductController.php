@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Store;
 use App\Models\Tag;
 use Illuminate\Contracts\View\View;
@@ -19,6 +20,7 @@ class ProductController extends Controller
         $stores = Store::select(['name', 'id'])->get();
         $brands = Brand::select(['name', 'id'])->where('is_active', 1)->get();
         $tags = Tag::where('is_active', 1)->get();
-        return view('admin.product.create', compact('stores', 'brands', 'tags'));
+        $categories = Category::getNested();
+        return view('admin.product.create', compact('stores', 'brands', 'tags', 'categories'));
     }
 }
