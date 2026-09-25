@@ -43,9 +43,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-primary" onclick="$('form').submit()">Create</button>
-                    </div>
                 </div>
                 <div class="card mb-3">
                     <div class="card-header">
@@ -155,8 +152,11 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="store" class="form-control" id="">
+                                <select name="store" class="form-control select2" id="">
                                     <option value="">Select a store</option>
+                                    @foreach ($stores as $store)
+                                        <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('store')" class="mt-2" />
                             </div>
@@ -170,9 +170,10 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="is_featured" class="form-control" id="">
-                                    <option value="">Select a store</option>
-                                </select>
+                                <label name="is_featured" class="form-check form-switch form-switch-3">
+                                    <input type="checkbox" class="form-check-input">
+                                    <span class="form-check-label">Enable</span>
+                                </label>
                                 <x-input-error :messages="$errors->get('is_featured')" class="mt-2" />
                             </div>
                         </div>
@@ -200,8 +201,11 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="brand" class="form-control" id="">
+                                <select name="brand" class="form-control select2">
                                     <option value="">Select a brand</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('brand')" class="mt-2" />
                             </div>
@@ -235,10 +239,21 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="tags" class="form-control" id="">
-                                    <option value="">Select Tags</option>
+                                <select name="tags" class="form-control select2" multiple="multiple">
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('brand')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="mb-3 row">
+                                <button type="submit" class="btn btn-primary" onclick="$('form').submit()">Create</button>
                             </div>
                         </div>
                     </div>

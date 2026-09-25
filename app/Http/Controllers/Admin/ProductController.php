@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Store;
+use App\Models\Tag;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -13,6 +16,9 @@ class ProductController extends Controller
     }
 
     function create(): View {
-        return view('admin.product.create');
+        $stores = Store::select(['name', 'id'])->get();
+        $brands = Brand::select(['name', 'id'])->where('is_active', 1)->get();
+        $tags = Tag::where('is_active', 1)->get();
+        return view('admin.product.create', compact('stores', 'brands', 'tags'));
     }
 }
