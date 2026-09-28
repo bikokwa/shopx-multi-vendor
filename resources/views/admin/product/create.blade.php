@@ -189,24 +189,24 @@
                                 <ul class="list-unstyled">
                                     @foreach ($categories as $category)
                                     <li>
-                                        <label for="" class="form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                        <label for="" class="form-check category-wrapper">
+                                            <input type="checkbox" class="form-check-input category-check">
                                             <span class="form-check-label">{{ $category->name }}</span>
                                         </label>
                                         @if ($category->children_nested && $category->children_nested->count() > 0)
                                         <ul class="list-unstyled ms-4 mt-2">
                                             @foreach($category->children_nested as $child)
                                             <li>
-                                                <label for="" class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
+                                                <label for="" class="form-check category-wrapper">
+                                                    <input type="checkbox" class="form-check-input category-check">
                                                     <span class="form-check-label">{{ $child->name }}</span>
                                                 </label>
                                                 @if ($child->children_nested && $child->children_nested->count() > 0)
                                                 <ul class="list-unstyled ms-4 mt-2">
                                                     @foreach($child->children_nested as $subChild)
                                                     <li>
-                                                        <label for="" class="form-check">
-                                                            <input type="checkbox" class="form-check-input">
+                                                        <label for="" class="form-check category-wrapper">
+                                                            <input type="checkbox" class="form-check-input category-check">
                                                             <span class="form-check-label">{{ $subChild->name }}</span>
                                                         </label>
                                                     </li>
@@ -292,3 +292,35 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).on('change', '.category-check', function() {
+        const isChecked = $(this).is(':checked');
+        $(this).closest('li').find('input.category-check').each(function() {
+            this.checked = isChecked;
+            this.indeterminate = false;
+        });
+
+        function updateParents($input) {
+            const $li = $input.closest('li').parent().closest('li');
+            if ($li.length) {
+                const $siblings = $li.find('> ul > li input.category-check');
+                const checkedCount = $siblings.filter(':checked').length;
+                const $parent = $li.find('> label > input.category-check');
+
+                if (checkedCount === 0) {
+                    $parent.prop('checked', false).prop('indeterminate', false);
+                } else if (checkedCount === $siblings.length) {
+                    $parent.prop('checked', true).prop('indeterminate', false);
+                } else {
+                    $parent.prop('checked', false).prop('indeterminate', true);
+                }
+
+                updateParents($parent);
+            }
+        }
+        updateParents($(this));
+    })
+</script>
+@endpush
