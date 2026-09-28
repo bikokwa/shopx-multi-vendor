@@ -89,12 +89,12 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="" class="form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" class="form-check-input manage-stock-check">
                                             <span class="form-check-label">Manage Stock</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 manage-stock d-none">
                                     <div class="mb-3">
                                         <label class="form-label">Quantity</label>
                                         <input type="text" class="form-control" name="quantity" placeholder="" value="" />
@@ -342,6 +342,14 @@
                 $li.addClass('d-none');
             }
         });
+    })
+
+    $('.manage-stock-check').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('.manage-stock').removeClass('d-none');
+        } else {
+            $('.manage-stock').addClass('d-none');
+        }
     })
 </script>
 @endpush
