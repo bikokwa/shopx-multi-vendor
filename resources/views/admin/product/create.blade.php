@@ -183,9 +183,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Categories</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 400px; overflow-y: scroll;">
                         <div class="col-md-12">
                             <div class="mb-3">
+                                <div class="mb-3"></div>
                                 <ul class="list-unstyled">
                                     @foreach ($categories as $category)
                                     <li>
