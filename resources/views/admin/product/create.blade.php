@@ -74,14 +74,14 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">From Date</label>
-                                    <input type="text" class="form-control" name="from_date" placeholder="" value="" />
+                                    <input type="text" class="form-control datepicker" name="from_date" placeholder="" value="" />
                                     <x-input-error :messages="$errors->get('from_date')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">To Date</label>
-                                    <input type="text" class="form-control" name="to_date" placeholder="" value="" />
+                                    <input type="text" class="form-control datepicker" name="to_date" placeholder="" value="" />
                                     <x-input-error :messages="$errors->get('to_date')" class="mt-2" />
                                 </div>
                             </div>
