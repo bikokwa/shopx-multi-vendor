@@ -138,7 +138,8 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <select name="status" class="form-control" id="">
-                                        <option value="published">Published</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
                                         <option value="draft">Draft</option>
                                         <option value="pending">Pending</option>
                                     </select>
@@ -274,7 +275,7 @@
                         <div class="card-body">
                             <div class="col-md-12">
                                 <div class="mb-3">
-                                    <select name="tags" class="form-control select2" multiple="multiple">
+                                    <select name="tags[]" class="form-control select2" multiple="multiple">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
