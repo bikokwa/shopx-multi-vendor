@@ -50,7 +50,8 @@ class ProductController extends Controller
 
         $product->save();
 
-        AlertService::created();
+        /** Attach categories */
+        $product->categories()->sync($request->categories);
 
         return response()->json(['success' => 'true', 'message' => 'Product created successfully']);
     }

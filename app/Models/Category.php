@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
@@ -29,5 +30,9 @@ class Category extends Model
             $cat->children_nested = self::getNested($cat->id, $depth + 1, $maxDepth);
         }
         return $categories;
+    }
+
+    function products(): BelongsToMany {
+        return $this->belongsToMany(Product::class);
     }
 }
