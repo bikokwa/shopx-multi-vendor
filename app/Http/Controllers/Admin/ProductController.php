@@ -53,6 +53,9 @@ class ProductController extends Controller
         /** Attach categories */
         $product->categories()->sync($request->categories);
 
+        /** Attach tags */
+        $product->tags()->sync($request->tags);
+
         return response()->json(['success' => 'true', 'message' => 'Product created successfully']);
     }
 }

@@ -10,4 +10,8 @@ class Product extends Model
     function categories(): BelongsToMany {
         return $this->belongsToMany(Category::class);
     }
+
+    function tags(): BelongsToMany {
+        return $this->belongsToMany(Tag::class);
+    }
 }
