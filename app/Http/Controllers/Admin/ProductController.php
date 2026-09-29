@@ -23,4 +23,8 @@ class ProductController extends Controller
         $categories = Category::getNested();
         return view('admin.product.create', compact('stores', 'brands', 'tags', 'categories'));
     }
+
+    function store(Request $request) {
+        
+    }
 }
