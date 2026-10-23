@@ -8,14 +8,15 @@
         </div>
         <div class="card-body p-0">
             <p>You can edit your account details here.</p>
-            <form method="POST" action="{{ route('profile.update') }}">
+            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row mt-30">
-                    <div id="image-preview">
+                    <x-input-image id="image-preview" name="avatar" :image="auth('web')->user()->avatar" />
+                    {{-- <div id="image-preview" style="background-image: url({{ asset(auth('web')->user()->avatar) }}); background-size: cover;">
                         <label for="image-upload" id="image-label">Choose File</label>
-                        <input type="file" name="image" id="image-upload" />
-                    </div>
+                        <input type="file" name="avatar" id="image-upload" />
+                    </div> --}}
                     <div class="form-group col-md-12">
                         <label>Name <span class="required">*</span></label>
                         <input required="" class="form-control" name="name" value="{{ auth('web')->user()->name }}"
