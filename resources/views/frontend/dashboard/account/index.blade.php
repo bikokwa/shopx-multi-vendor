@@ -10,6 +10,7 @@
             <p>You can edit your account details here.</p>
             <form method="POST" action="{{ route('profile.update') }}">
                 @csrf
+                @method('PUT')
                 <div class="row mt-30">
                     <div class="form-group col-md-12">
                         <label>Name <span class="required">*</span></label>
@@ -38,24 +39,27 @@
         </div>
         <div class="card-body p-0">
             <p>You can change your password here.</p>
-            <form method="post" name="enq">
+            <form method="POST" action="{{ route('password.update') }}">
+                @csrf
+                @method('PUT')
                 <div class="row mt-30">
                     <div class="form-group col-md-12">
-                        <label>Current Password <span
-                                class="required">*</span></label>
-                        <input required="" class="form-control" name="password"
+                        <label>Current Password <span class="required">*</span></label>
+                        <input required="" class="form-control" name="current_password"
                             type="password" />
+                        <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-12">
                         <label>New Password <span class="required">*</span></label>
-                        <input required="" class="form-control" name="npassword"
+                        <input required="" class="form-control" name="password"
                             type="password" />
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
                     <div class="form-group col-md-12">
-                        <label>Confirm Password <span
-                                class="required">*</span></label>
-                        <input required="" class="form-control" name="cpassword"
+                        <label>Confirm Password <span class="required">*</span></label>
+                        <input required="" class="form-control" name="password_confirmation"
                             type="password" />
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
                     <div class="col-md-12">
                         <button type="submit"
