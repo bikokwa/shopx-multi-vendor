@@ -42,7 +42,43 @@
         <div class="card-header">
             <h3 class="card-title">Update Password</h3>
         </div>
-        <div class="card-body"></div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('admin.password.update') }}">
+                @csrf
+                @method('PUT')
+                <div class="row mt-30">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label required">Current Password</label>
+                            <input required="" class="form-control" name="current_password"
+                                type="password" />
+                            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label required">New Password</label>
+                            <input required="" class="form-control" name="password"
+                                type="password" />
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label required">Confirm Password</label>
+                            <input required="" class="form-control" name="password_confirmation"
+                                type="password" />
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" name="submit" value="Submit">
+                            Update Password
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
