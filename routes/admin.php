@@ -58,6 +58,7 @@ Route::middleware('auth:admin')
         ->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
 });
 
 
