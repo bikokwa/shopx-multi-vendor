@@ -328,6 +328,29 @@
                     role="button"
                     aria-expanded="false"
                 >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    </span>
+                    <span class="nav-link-title"> KYC Requests </span>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-menu-columns">
+                    <div class="dropdown-menu-column">
+                        <a class="dropdown-item" href="{{ route('admin.kyc.index') }}">
+                            All Requests
+                        </a>
+                    </div>
+                    </div>
+                </div>
+            </li>
+            {{-- <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle"
+                    href="#navbar-base"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="false"
+                    role="button"
+                    aria-expanded="false"
+                >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"
                     ><!-- Download SVG icon from http://tabler.io/icons/icon/package -->
                     <svg
@@ -375,7 +398,7 @@
                     </div>
                     </div>
                 </div>
-            </li>
+            </li> --}}
         </ul>
         <!-- END NAVBAR MENU -->
         </div>
