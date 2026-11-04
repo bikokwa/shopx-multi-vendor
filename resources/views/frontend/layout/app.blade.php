@@ -12,7 +12,7 @@
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.svg" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/dist/imgs/theme/favicon.svg') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -40,37 +40,37 @@
                                 <!-- MAIN SLIDES -->
                                 <div class="product-image-slider">
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b1.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b1.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b2.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b2.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b3.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b3.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b4.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b4.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b1.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b1.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b2.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b2.png') }}" alt=" product image" />
                                     </figure>
                                     <figure class="border-radius-10">
-                                        <img src="assets/imgs/shop/product_slider_b3.png" alt=" product image" />
+                                        <img src="{{ asset('assets/frontend/dist/imgs/shop/product_slider_b3.png') }}" alt=" product image" />
                                     </figure>
 
                                 </div>
                                 <!-- THUMBNAILS -->
                                 <div class="slider-nav-thumbnails">
-                                    <div><img src="assets/imgs/shop/thumbnail-3.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-5.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-6.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-7.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-8.jpg" alt="product image" /></div>
-                                    <div><img src="assets/imgs/shop/thumbnail-9.jpg" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-3.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-4.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-5.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-6.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-7.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-8.jpg') }}" alt="product image" /></div>
+                                    <div><img src="{{ asset('assets/frontend/dist/imgs/shop/thumbnail-9.jpg') }}" alt="product image" /></div>
                                 </div>
                             </div>
                             <!-- End Gallery -->

@@ -12,7 +12,7 @@
                 @csrf
                 @method('PUT')
                 <div class="row mt-30">
-                    <x-input-image id="image-preview" name="avatar" :image="auth('web')->user()->avatar" />
+                    <x-input-image imageUploadId="image-upload" imagePreviewId="image-preview" imageLabelId="image-label" name="avatar" :image="auth('web')->user()->avatar" />
                     {{-- <div id="image-preview" style="background-image: url({{ asset(auth('web')->user()->avatar) }}); background-size: cover;">
                         <label for="image-upload" id="image-label">Choose File</label>
                         <input type="file" name="avatar" id="image-upload" />
