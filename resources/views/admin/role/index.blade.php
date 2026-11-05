@@ -27,16 +27,21 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($roles as $role)
+                        @forelse($roles as $role)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $role->name }}</td>
                                 <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
                                 <td>
                                     <a href="{{ route('admin.role.edit', $role) }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="{{ route('admin.role.destroy', $role) }}" class="btn btn-danger btn-sm delete-item">Delete</a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No roles found.</td>
+                            </tr>
+                        @endforelse
                       </tbody>
                     </table>
                   </div>
