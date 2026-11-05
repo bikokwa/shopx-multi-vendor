@@ -16,8 +16,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <form action="">
+                <form action="">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
                                 <label class="form-label required">Role Name</label>
@@ -25,8 +25,22 @@
                                 <x-input-error :messages="$errors->get('role')" class="mt-2" />
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="row">
+                        @foreach ($permissions as $groupName => $permission)
+                            <div class="col-md-4 mb3">
+                                <h3>{{ $groupName }}</h3>
+                                @foreach ($permission as $item)
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" value="{{ $item->name }}" name="permission[]">
+                                        <span class="form-check-label">{{ $item->name }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                </form>
+
                 <div class="card-footer">
 
                 </div>
