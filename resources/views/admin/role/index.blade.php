@@ -21,34 +21,22 @@
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Date of birth</th>
-                          <th>Gender</th>
-                          <th>Status</th>
+                          <th>Role Name</th>
+                          <th>Permissions</th>
                           <th class="w-1"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @foreach($kycRequests as $kycRequest)
+                        @foreach($roles as $role)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $kycRequest->full_name }}</td>
-                                <td class="text-secondary">{{ $kycRequest->user->email }}</td>
-                                <td class="text-secondary">{{ $kycRequest->date_of_birth }}</td>
-                                <td class="text-secondary">{{ $kycRequest->gender }}</a></td>
-                                @if ($kycRequest->status == 'pending')
-                                    <td class="text-secondary"><span class="badge bg-warning-lt">Pending</span></td>
-                                @elseif ($kycRequest->status == 'approved')
-                                    <td class="text-secondary"><span class="badge bg-success-lt">Approved</span></td>
-                                @else
-                                    <td class="text-secondary"><span class="badge bg-danger-lt">Rejected</span></td>
-                                @endif
+                                <td>{{ $role->name }}</td>
+                                <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
                                 <td>
-                                    <a href="{{ route('admin.kyc.show', $kycRequest) }}">View</a>
+                                    <a href="{{ route('admin.role.edit', $role) }}" class="btn btn-primary btn-sm">Edit</a>
                                 </td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                       </tbody>
                     </table>
                   </div>
