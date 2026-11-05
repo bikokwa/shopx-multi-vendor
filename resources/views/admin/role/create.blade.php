@@ -16,7 +16,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="">
+                <form action="{{ route('admin.role.store') }}" method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
@@ -32,7 +33,7 @@
                                 <h3>{{ $groupName }}</h3>
                                 @foreach ($permission as $item)
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" value="{{ $item->name }}" name="permission[]">
+                                        <input type="checkbox" class="form-check-input" value="{{ $item->name }}" name="permissions[]">
                                         <span class="form-check-label">{{ $item->name }}</span>
                                     </label>
                                 @endforeach
@@ -41,8 +42,8 @@
                     </div>
                 </form>
 
-                <div class="card-footer">
-
+                <div class="card-footer text-end">
+                    <button onclick="$('form').submit()" type="submit" class="btn btn-primary mt-3">Create</button>
                 </div>
             </div>
         </div>
