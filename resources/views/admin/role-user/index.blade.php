@@ -20,28 +20,34 @@
                     <table class="table table-vcenter card-table">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Role Name</th>
-                          <th>Permissions</th>
-                          <th class="w-1"></th>
+                          <th scope="col">No.</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Role</th>
+                          <th scope="col" class="w-1"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @forelse($roles as $role)
+                        @forelse($admins as $admin)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $role->name }}</td>
-                                <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
+                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td>
                                 <td>
-                                    <a href="{{ route('admin.role.edit', $role) }}" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="{{ route('admin.role.destroy', $role) }}" class="btn btn-danger btn-sm delete-item">Delete</a>
+                                    @foreach($admin->getRoleNames() as $role)
+                                        <span class="badge bg-primary-lt">{{ $role }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.role-user.edit', $admin) }}">Edit</a>
+                                    <a href="{{ route('admin.role-user.destroy', $admin) }}" class="text-danger delete-item">Delete</a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">No roles found.</td>
+                                <td colspan="4" class="text-center">No role users found.</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                       </tbody>
                     </table>
                   </div>
