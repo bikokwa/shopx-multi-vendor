@@ -67,17 +67,41 @@ class RoleUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Admin $role_user): View
     {
-        //
+        $admin = $role_user;
+        $roles = Role::all();
+        return view('admin.role-user.edit', compact('admin', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Admin $role_user): RedirectResponse
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:admins,email,' . $role_user->id],
+        ]);
+
+        $role = Role::findOrFail($request->role);
+
+        $admin = $role_user;
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => ['required', 'confirmed']
+            ]);
+            $admin->password = bcrypt($request->password);
+        }
+        $admin->save();
+
+        $admin->assignRole($role);
+
+        AlertService::created();
+
+        return to_route('admin.role-user.index');
     }
 
     /**
