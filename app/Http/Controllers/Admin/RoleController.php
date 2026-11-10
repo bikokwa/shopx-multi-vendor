@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\AlertService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -71,6 +72,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if ($role->name === 'Super Admin') {
+            AlertService::error('The Super Admin role cannot be modified.');
+            return to_route('admin.role.index');
+        }
+
         $request->validate([
             'role' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id],
             'permissions' => ['required', 'array'],
@@ -87,8 +93,13 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role): JsonResponse
     {
+        if ($role->name === 'Super Admin') {
+            AlertService::error('The Super Admin role cannot be deleted.');
+            return response()->json(['status' => 'error', 'message' => 'The Super Admin role cannot be deleted.']);
+        }
+
         try {
             DB::beginTransaction();
             // remove role from all users
