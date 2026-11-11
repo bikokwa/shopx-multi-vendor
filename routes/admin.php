@@ -79,6 +79,7 @@ Route::middleware('auth:admin')
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings/general-settings', [SettingsController::class, 'generalSettings'])->name('settings.general');
 });
 
 
