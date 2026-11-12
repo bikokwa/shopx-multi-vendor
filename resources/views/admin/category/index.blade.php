@@ -35,8 +35,6 @@
                             <div class="mb-2">
                                 <label for="parent_id" class="form-label">Parent Category <span class="text-danger">*</span></label>
                                 <select name="parent_id" class="form-select" id="parent_id">
-                                    <option value="">Select Parent</option>
-                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -57,3 +55,37 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+<script>
+    $(function() {
+        $('#category-form').on('submit', function(e) {
+            e.preventDefault();
+
+            let method = "POST";
+            let url = "{{ route('admin.categories.store') }}";
+            let data = {
+                name: $('#name').val(),
+                slug: $('#slug').val(),
+                parent_id: $('#parent_id').val(),
+                is_active: $('#is_active').is(':checked') ? 1 : 0,
+                _token: "{{ csrf_token() }}"
+            }
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: data,
+                success: function(response) {
+                    console.log(response);
+
+                },
+                error: function(xhr, status, error) {
+
+                }
+            })
+        })
+    })
+</script>
+@endpush
