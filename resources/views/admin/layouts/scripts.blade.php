@@ -53,4 +53,10 @@
             });
         });
     });
+
+    // Create an instance of Notyf
+    var notyf = new Notyf({
+        duration: 3000
+    });
+
 </script>

@@ -78,14 +78,26 @@
                 method: method,
                 data: data,
                 success: function(response) {
-                    console.log(response);
-
+                    clearForm();
+                    notyf.confirm(response.message);
                 },
                 error: function(xhr, status, error) {
-
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        console.log(key, value);
+                        notyf.alert(errors[key][0]);
+                    })
                 }
             })
         })
+
+        // clear form
+        function clearForm() {
+            $('#name').val('');
+            $('#slug').val('');
+            $('#parent_id').val('');
+            $('#is_active').prop('checked',true);
+        }
     })
 </script>
 @endpush
