@@ -27,4 +27,9 @@ class CategoryController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Category created successfully', 'category' => $category]);
     }
+
+    function getNestedCategories() {
+        $categories = Category::getNested();
+        return response()->json($categories);
+    }
 }
