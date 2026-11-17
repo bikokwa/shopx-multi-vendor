@@ -94,7 +94,7 @@
         // load parent dropdown
         function loadParentDropdown(selectedId, excludeId) {
             $.get("{{ route('admin.categories.nested') }}", function(data) {
-                let options = '<option value=""></option>';
+                let options = '<option value="">None (Root)</option>';
 
                 function addOptions(cats, prefix, depth) {
                     cats.forEach(function(cat) {
