@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -44,6 +46,33 @@ class CategoryController extends Controller
         $category = Category::create($data);
 
         return response()->json(['status' => 'success', 'message' => 'Category created successfully', 'category' => $category]);
+    }
+
+    function updateOrder(Request $request) {
+        try {
+            $tree = $request->tree;
+            DB::transaction(function() use ($tree) {
+                $this->updateTree($tree, null);
+            });
+            return response()->json(['status' => 'success', 'message' => 'Category order updated successfully']);
+        } catch(\Throwable $th) {
+            Log::error('Category order update Error: ', $th);
+            return response()->json(['status' => 'success', 'message' => $th->getMessage()]);
+        }
+    }
+
+    function updateTree($nodes, $parentId) {
+        foreach ($nodes as $position => $node) {
+            $category = Category::find($node['id']);
+            $category->update([
+                'parent_id' => $parentId,
+                'position' => $position
+            ]);
+
+            if (isset($node['children']) && is_array($node['children'])) {
+                $this->updateTree($node['children'], $category->id);
+            }
+        }
     }
 
     function getNestedCategories() {

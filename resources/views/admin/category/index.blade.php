@@ -122,6 +122,7 @@
                 $('#nestable-tree').nestable({ maxDepth: 3}).off('change').on('change', function(e) {
                     if (!$(e.target).hasClass('no-drag')) {
                         console.log(e);
+                        updateOrder();
                     }
                 });
                 $('#tree-loading').hide();
@@ -133,13 +134,13 @@
             let html = '<ol class="dd-list" style="margin-bottom: 0">';
             categories.forEach(function(cat) {
                 html += `
-                    <li class="dd-item custom-cat-item" data-id="">
+                    <li class="dd-item custom-cat-item" data-id="${cat.id}">
                         <div class="dd-item-row custom-cat-row">
                             <div class="dd-handle custom-cat-handle" title="Drag to reorder">
                                 <i class="ti ti-grip-horizontal"></i>
                             </div>
                             <i class="ti ti-folder cat-folder-icon"></i>
-                            <div class="cat-label custom-cat-label" data-id="">
+                            <div class="cat-label custom-cat-label" data-id="${cat.id}">
                                 <span>${cat.name}</span>
                                 ${cat.is_active ? '<span class="text-success ms-2" style="font-size: 10px">&#9679</span>': '<span class="text-danger ms-2" style="font-size: 10px">&#9679</span>'}
                             </div>
@@ -152,6 +153,25 @@
             })
             html += '</ol>';
             return html;
+        }
+
+        function updateOrder() {
+            let tree = $('#nestable-tree').nestable('serialize');
+            $.post({
+                url: "{{ route('admin.categories.update-order') }}",
+                data: {
+                    tree: tree,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        notyf.success(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                }
+            })
         }
 
         $('#category-form').on('submit', function(e) {
