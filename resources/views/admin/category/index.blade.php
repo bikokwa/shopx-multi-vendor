@@ -77,6 +77,7 @@
                     </div>
                     <div class="card-body">
                         <form action="" id="category-form">
+                            <input type="hidden" id="category-id">
                             <div class="mb-2">
                                 <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control" required>
@@ -98,7 +99,7 @@
                             </div>
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
-                                <button type="button" class="btn btn-danger" id="btn-delete">Delete</button>
+                                <button type="button" class="btn btn-danger d-none" id="btn-delete">Delete</button>
                                 <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
                             </div>
                         </form>
@@ -165,7 +166,7 @@
                 },
                 success: function(response) {
                     if (response.status == 'success') {
-                        notyf.success(response.message);
+                        notyf.confirm(response.message);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -222,6 +223,24 @@
                 addOptions(data, '', 0);
                 $('#parent_id').html(options);
             })
+        }
+
+        $(document).off('click', '.cat-label').on('click', '.cat-label', function(e) {
+            e.stopPropagation();
+            let id = $(this).data('id');
+            $.get("{{ route('admin.categories.show', ':id') }}".replace(':id', id), function(cat) {
+                console.log(cat);
+                fillForm(cat);
+            })
+        })
+
+        function fillForm(cat) {
+            $('#name').val(cat.name);
+            $('#slug').val(cat.slug);
+            $('#is_active').prop('checked', cat.is_active);
+            loadParentDropdown(cat.parent_id, cat.id);
+            $('#category-id').val(cat.id);
+            $('#btn-delete').removeClass('d-none');
         }
 
         // clear form

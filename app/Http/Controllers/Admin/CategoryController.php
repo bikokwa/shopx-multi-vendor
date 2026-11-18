@@ -75,6 +75,11 @@ class CategoryController extends Controller
         }
     }
 
+    function show(int $id) {
+        $category = Category::findOrFail($id);
+        return response()->json($category);
+    }
+
     function getNestedCategories() {
         $categories = Category::getNested();
         return response()->json($categories);
