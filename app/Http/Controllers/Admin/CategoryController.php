@@ -48,6 +48,40 @@ class CategoryController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Category created successfully', 'category' => $category]);
     }
 
+    function update(Request $request, int $id) {
+        $category = Category::findOrFail($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255','unique:categories,slug,' . $category->id],
+            'parent_id' => ['nullable', 'exists:categories,id'],
+            'is_active' => ['boolean']
+        ]);
+
+        // preventing circular reference and max depth
+        if ($data['parent_id'] ?? null) {
+            $parent = Category::find($data['parent_id']);
+            $depth = 1;
+            while($parent && $parent->parent->id) {
+                $depth++;
+                $parent = $parent->parent;
+                if ($depth >= 3) break;
+            }
+
+            if ($depth >= 3) {
+                throw ValidationException::withMessages([
+                    'parent_id' => 'Maximum depth reached'
+                ]);
+            }
+        }
+
+        $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position') + 1;
+        $data['is_active'] = $request->has('is_active');
+
+        $category->update($data);
+
+        return response()->json(['status' => 'success', 'message' => 'Category updated successfully', 'category' => $category]);
+    }
+
     function updateOrder(Request $request) {
         try {
             $tree = $request->tree;

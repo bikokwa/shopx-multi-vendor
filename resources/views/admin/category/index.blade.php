@@ -178,8 +178,9 @@
         $('#category-form').on('submit', function(e) {
             e.preventDefault();
 
-            let method = "POST";
-            let url = "{{ route('admin.categories.store') }}";
+            let id = $('#category-id').val();
+            let method = id ? "PUT" : "POST";
+            let url = id ? "{{ route('admin.categories.update', ':id') }}".replace(':id', id) : "{{ route('admin.categories.store') }}";
             let data = {
                 name: $('#name').val(),
                 slug: $('#slug').val(),
@@ -193,6 +194,7 @@
                 method: method,
                 data: data,
                 success: function(response) {
+                    loadTree();
                     clearForm();
                     notyf.confirm(response.message);
                 },
