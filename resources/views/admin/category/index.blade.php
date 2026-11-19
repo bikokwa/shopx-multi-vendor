@@ -49,6 +49,14 @@
         gap: 2px;
         flex: 1 1 auto;
     }
+
+    .dd-list .dd-list {
+        padding-left: 50px;
+    }
+
+    .dd-item-row {
+        margin-bottom: 5px;
+    }
 </style>
 @endpush
 @section('contents')
@@ -58,7 +66,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>Categories</span>
-                        <button class="btn btn-primary">New</button>
+                        <button class="btn btn-primary" id="btn-new">New</button>
                     </div>
                     <div class="card-body">
                         <div id="category-tree" class="dd">
@@ -73,7 +81,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <span>Create Category</span>
+                        <span class="category-title">Create Category</span>
                     </div>
                     <div class="card-body">
                         <form action="" id="category-form">
@@ -115,7 +123,7 @@
 <script>
     $(function() {
         function loadTree() {
-            $('#tree-loading').show();
+            $('#tree-loading').removeClass('d-none');
             $.get("{{ route('admin.categories.nested') }}", function(data) {
                 $('#category-tree').empty();
                 var html = '<div class="dd" id="nestable-tree">' + renderTree(data) + '</div>' ;
@@ -126,7 +134,7 @@
                         updateOrder();
                     }
                 });
-                $('#tree-loading').hide();
+                $('#tree-loading').addClass('d-none');
             });
         }
 
@@ -275,6 +283,7 @@
         })
 
         function fillForm(cat) {
+            $('.category-title').text('Edit Category');
             $('#name').val(cat.name);
             $('#slug').val(cat.slug);
             $('#is_active').prop('checked', cat.is_active);
@@ -285,6 +294,7 @@
 
         // clear form
         function clearForm() {
+            $('.category-title').text('Create Category');
             $('#name').val('');
             $('#slug').val('');
             $('#parent_id').val('');
@@ -292,6 +302,24 @@
             loadParentDropdown(null, null);
             $('#category-id').val('');
             $('#btn-delete').addClass('d-none');
+        }
+
+        $('#btn-new').on('click', function() {
+            clearForm();
+        })
+
+        $('#btn-cancel').on('click', function() {
+            clearForm();
+        })
+
+        $('#name').on('input', function() {
+            if (!$('#category-id').val()) {
+                $('#slug').val(slugify($(this).val()));
+            }
+        })
+
+        function slugify(text) {
+            return text.toString().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'').replace(/\-+/g,'-').replace(/^\-+|\-+$/g,'');
         }
 
         // initial load
