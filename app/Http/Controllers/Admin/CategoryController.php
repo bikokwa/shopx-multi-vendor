@@ -74,8 +74,8 @@ class CategoryController extends Controller
             }
         }
 
-        $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position') + 1;
-        $data['is_active'] = $request->has('is_active');
+        // $data['position'] = Category::where('parent_id', $data['parent_id'] ?? null)->max('position') + 1;
+        $data['is_active'] = $data['is_active'] ?? false;
 
         $category->update($data);
 
@@ -112,6 +112,16 @@ class CategoryController extends Controller
     function show(int $id) {
         $category = Category::findOrFail($id);
         return response()->json($category);
+    }
+
+    function destroy(int $id) {
+        $category = Category::findOrFail($id);
+        if ($category->children()->count() > 0) {
+            return response()->json(['success' => false, 'message' => 'Category has children and cannot be deleted'], 422);
+        }
+
+        $category->delete();
+        return response()->json(['success' => true, 'message' => 'Category deleted successfully']);
     }
 
     function getNestedCategories() {

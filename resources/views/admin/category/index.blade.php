@@ -227,11 +227,49 @@
             })
         }
 
+        // delete category
+        $('#btn-delete').on('click', function(e) {
+            e.preventDefault();
+            let id = $('#category-id').val();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('admin.categories.destroy', ':id') }}".replace(':id', id),
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            _method: 'DELETE'
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                clearForm();
+                                loadTree();
+                                notyf.confirm(response.message);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status == 422) {
+                                notyf.alert(xhr.responseJSON.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).off('click', '.cat-label').on('click', '.cat-label', function(e) {
             e.stopPropagation();
             let id = $(this).data('id');
             $.get("{{ route('admin.categories.show', ':id') }}".replace(':id', id), function(cat) {
-                console.log(cat);
                 fillForm(cat);
             })
         })
@@ -252,6 +290,8 @@
             $('#parent_id').val('');
             $('#is_active').prop('checked',true);
             loadParentDropdown(null, null);
+            $('#category-id').val('');
+            $('#btn-delete').addClass('d-none');
         }
 
         // initial load
