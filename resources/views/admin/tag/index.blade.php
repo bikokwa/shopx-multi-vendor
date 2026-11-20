@@ -39,10 +39,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.role.edit', $tag) }}">
+                                    <a href="{{ route('admin.tags.edit', $tag) }}">
                                         <i class="ti ti-edit"></i>
                                     </a>
-                                    <a href="{{ route('admin.role.destroy', $tag) }}">
+                                    <a class="text-danger delete-item" href="{{ route('admin.tags.destroy', $tag) }}">
                                         <i class="ti ti-trash"></i>
                                     </a>
                                 </td>
@@ -56,7 +56,7 @@
                     </table>
                   </div>
                   <div class="card-footer">
-                    {{-- {{ $kycRequests->links() }} --}}
+                    {{ $tags->links() }}
                   </div>
             </div>
         </div>
