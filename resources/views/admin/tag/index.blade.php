@@ -4,7 +4,7 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Product Tags</h3>
+                <h3 class="card-title">Product Tags</h3>
                 <div class="card-actions">
                     <a href="{{ route('admin.tags.create') }}" class="btn btn-primary btn-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-2">
@@ -21,29 +21,37 @@
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>Role Name</th>
-                          <th>Permissions</th>
-                          <th class="w-1"></th>
+                          <th>Name</th>
+                          <th>Status</th>
+                          <th class="w-100px"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        {{-- @forelse($roles as $role)
+                        @forelse($tags as $tag)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $role->name }}</td>
-                                <td><span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
+                                <td>{{ $tag->name }}</td>
                                 <td>
-                                    @if ($role->name != 'Super Admin')
-                                        <a href="{{ route('admin.role.edit', $role) }}" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="{{ route('admin.role.destroy', $role) }}" class="btn btn-danger btn-sm delete-item">Delete</a>
+                                    @if ($tag->is_active == 1)
+                                        <span class="badge bg-primary-lt">Active</span>
+                                    @else
+                                        <span class="badge bg-primary-lt">Inactive</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.role.edit', $tag) }}">
+                                        <i class="ti ti-edit"></i>
+                                    </a>
+                                    <a href="{{ route('admin.role.destroy', $tag) }}">
+                                        <i class="ti ti-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">No roles found.</td>
+                                <td colspan="4" class="text-center">No tags found.</td>
                             </tr>
-                        @endforelse --}}
+                        @endforelse
                       </tbody>
                     </table>
                   </div>
