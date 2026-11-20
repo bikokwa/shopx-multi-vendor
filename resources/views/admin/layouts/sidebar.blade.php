@@ -328,6 +328,13 @@
                                     </a>
                                 </div>
                             @endif
+                            @if(hasPermission(['Role Management']))
+                                <div class="dropdown-menu-column">
+                                    <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
+                                        Product Tags
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </li>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\KycRequestController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,6 +87,9 @@ Route::middleware('auth:admin')
     Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
     Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    /** Tags Routes */
+    Route::resource('/tags', TagController::class);
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
