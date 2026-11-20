@@ -7,10 +7,17 @@ use App\Models\Tag;
 use App\Services\AlertService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-class TagController extends Controller
+class TagController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array {
+        return [
+            new Middleware('permission:Tags Management')
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

@@ -304,7 +304,7 @@
                     <span class="nav-link-title"> Home </span>
                 </a>
             </li>
-            @if (hasPermission(['Role Management', 'Role User Management']))
+            @if (hasPermission(['Category Management', 'Tags Management']))
                 <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle"
@@ -321,14 +321,14 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-menu-columns">
-                            @if(hasPermission(['Role Management']))
+                            @if(hasPermission(['Category Management']))
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="{{ route('admin.categories.index') }}">
                                         Categories
                                     </a>
                                 </div>
                             @endif
-                            @if(hasPermission(['Role Management']))
+                            @if(hasPermission(['Tags Management']))
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="{{ route('admin.tags.index') }}">
                                         Product Tags
