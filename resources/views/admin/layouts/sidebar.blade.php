@@ -304,7 +304,7 @@
                     <span class="nav-link-title"> Home </span>
                 </a>
             </li>
-            @if (hasPermission(['Category Management', 'Tags Management']))
+            @if (hasPermission(['Category Management', 'Tags Management', 'Brand Management']))
                 <li class="nav-item dropdown">
                     <a
                         class="nav-link dropdown-toggle"
@@ -335,7 +335,7 @@
                                     </a>
                                 </div>
                             @endif
-                            @if(hasPermission(['Tags Management']))
+                            @if(hasPermission(['Brand Management']))
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="{{ route('admin.brands.index') }}">
                                         Brands

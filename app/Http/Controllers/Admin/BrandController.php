@@ -8,17 +8,26 @@ use App\Services\AlertService;
 use App\Traits\FileUploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 
-class BrandController extends Controller
+class BrandController extends Controller implements HasMiddleware
 {
     use FileUploadTrait;
+
+    static function Middleware(): array {
+        return [
+            new Middleware('permission:Brand Management')
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        return view('admin.brand.index');
+        $brands = Brand::paginate(20);
+        return view('admin.brand.index', compact('brands'));
     }
 
     /**
@@ -65,24 +74,44 @@ class BrandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Brand $brand): View
     {
-        //
+        return view('admin.brand.edit', compact('brand'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'brand_logo' => ['nullable', 'image', 'max:2048'],
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $brand->name = $request->name;
+        if ($request->hasFile('brand_logo')) {
+            $logoPath = $this->uploadFile($request->file('brand_logo'), $brand->image);
+            $brand->image = $logoPath;
+        }
+        $brand->slug = Str::slug($request->name);
+        $brand->is_active = $request->has('status') ? 1: 0;
+        $brand->save();
+
+        AlertService::updated();
+
+        return to_route('admin.brands.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Brand $brand)
     {
-        //
+        $this->deleteFile($brand->image);
+
+        $brand->delete();
+        AlertService::deleted();
+        return response()->json(['status' => 'success', 'message' => 'Brand deleted successfully']);
     }
 }
