@@ -47,9 +47,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer text-end">
-                        <button onclick="$('form').submit()" type="submit" class="btn btn-primary mt-3">Create</button>
-                    </div>
                 </div>
                 <div class="card mb-3">
                     <div class="card-header">Overview</div>
@@ -71,21 +68,21 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label class="form-label required">Special Price</label>
+                                    <label class="form-label">Special Price</label>
                                     <input type="text" class="form-control" name="special_price" value="">
                                     <x-input-error :messages="$errors->get('special_price')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label required">From Date</label>
+                                    <label class="form-label">From Date</label>
                                     <input type="text" class="form-control" name="from_date" value="">
                                     <x-input-error :messages="$errors->get('from_date')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label required">To Date</label>
+                                    <label class="form-label">To Date</label>
                                     <input type="text" class="form-control" name="to_date" value="">
                                     <x-input-error :messages="$errors->get('to_date')" class="mt-2" />
                                 </div>
@@ -101,7 +98,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label class="form-label required">Quantity</label>
+                                        <label class="form-label">Quantity</label>
                                         <input type="text" class="form-control" name="qty" value="">
                                         <x-input-error :messages="$errors->get('qty')" class="mt-2" />
                                     </div>
@@ -157,8 +154,11 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="store" class="form-control" id="">
+                                <select name="store" class="form-control select2" id="">
                                     <option value="">Select a store</option>
+                                    @foreach ($stores as $store)
+                                        <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('store')" class="mt-2" />
                             </div>
@@ -172,9 +172,10 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="is_featured" class="form-control" id="">
-                                    <option value="">Is Featured</option>
-                                </select>
+                                <label class="form-check form-switch form-switch-3">
+                                    <input type="checkbox" class="form-check-input">
+                                    <span class="form-check-label">Enable</span>
+                                </label>
                                 <x-input-error :messages="$errors->get('is_featured')" class="mt-2" />
                             </div>
                         </div>
@@ -202,8 +203,11 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="brand" class="form-control" id="">
+                                <select name="brand" class="form-control select2" id="">
                                     <option value="">Select a brand</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('brand')" class="mt-2" />
                             </div>
@@ -237,10 +241,21 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <select name="brand" class="form-control" id="">
-                                    <option value="">Select tags</option>
+                                <select name="tags[]" class="form-control select2" multiple="multiple" id="">
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('tag')" class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="mb-3 row">
+                                <button onclick="$('form').submit()" type="submit" class="btn btn-primary mt-3">Create</button>
                             </div>
                         </div>
                     </div>
