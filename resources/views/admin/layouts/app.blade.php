@@ -70,6 +70,7 @@
     <script src="https://cdn.jsdelivr.net/npm/notyf-js@2.1.2/dist/notyf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.1/dist/js/select2.min.js"></script>
+    <script src="{{ asset('assets/admin/dist/libs/litepicker/dist/litepicker.js') }}"></script>
     <script src="{{ asset('assets/admin/dist/js/tabler.min.js') }}" defer></script>
     @include('admin.layouts.scripts');
     <!-- END GLOBAL MANDATORY SCRIPTS -->

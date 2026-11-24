@@ -76,14 +76,14 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">From Date</label>
-                                    <input type="text" class="form-control" name="from_date" value="">
+                                    <input type="text" class="form-control datepicker" name="from_date" value="">
                                     <x-input-error :messages="$errors->get('from_date')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">To Date</label>
-                                    <input type="text" class="form-control" name="to_date" value="">
+                                    <input type="text" class="form-control datepicker" name="to_date" value="">
                                     <x-input-error :messages="$errors->get('to_date')" class="mt-2" />
                                 </div>
                             </div>
@@ -91,12 +91,12 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label class="form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" class="form-check-input manage-stock-check">
                                             <span class="form-check-label">Manage Stock</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 manage-stock d-none">
                                     <div class="mb-3">
                                         <label class="form-label">Quantity</label>
                                         <input type="text" class="form-control" name="qty" value="">
@@ -345,6 +345,15 @@
         // if query is empty, show all
         if (query === '') {
             $('#category-tree li').removeClass('d-none');
+        }
+    })
+
+    // manage stock toggle
+    $('.manage-stock-check').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('.manage-stock').removeClass('d-none');
+        } else {
+            $('.manage-stock').addClass('d-none');
         }
     })
 </script>
