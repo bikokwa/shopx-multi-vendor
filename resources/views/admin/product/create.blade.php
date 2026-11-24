@@ -185,15 +185,18 @@
                     <div class="card-header">
                         <h3 class="card-title">Categories</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 400px; overflow-y: scroll;">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <ul class="list-unstyled">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="category-search" placeholder="Search Category">
+                                </div>
+                                <ul class="list-unstyled" id="category-tree">
                                     @foreach ($categories as $category)
                                     <li>
                                         <label for="" class="form-check category-wrapper">
                                             <input type="checkbox" class="form-check-input category-check">
-                                            <span class="form-check-label">{{ $category->name }}</span>
+                                            <span class="form-check-label category-label">{{ $category->name }}</span>
                                         </label>
                                         @if ($category->children_nested && $category->children_nested->count() > 0)
                                         <ul class="list-unstyled ms-4 mt-2">
@@ -201,7 +204,7 @@
                                             <li>
                                                 <label for="" class="form-check category-wrapper">
                                                     <input type="checkbox" class="form-check-input category-check">
-                                                    <span class="form-check-label">{{ $child->name }}</span>
+                                                    <span class="form-check-label category-label">{{ $child->name }}</span>
                                                 </label>
                                                 @if ($child->children_nested && $child->children_nested->count() > 0)
                                                 <ul class="list-unstyled ms-4 mt-2">
@@ -209,7 +212,7 @@
                                                     <li>
                                                         <label for="" class="form-check category-wrapper">
                                                             <input type="checkbox" class="form-check-input category-check">
-                                                            <span class="form-check-label">{{ $subChild->name }}</span>
+                                                            <span class="form-check-label category-label">{{ $subChild->name }}</span>
                                                         </label>
                                                     </li>
                                                     @endforeach
@@ -321,6 +324,28 @@
             }
         }
         updateParents($(this));
+    })
+
+    // search logic
+    $('#category-search').on('input', function() {
+        const query = $(this).val().toLowerCase();
+
+        $('#category-tree li').each(function() {
+            const label = $(this).find('> label > .category-label').text().toLowerCase();
+
+            if (label.includes(query)) {
+                $(this).removeClass('d-none');
+                // show all ancestors
+                $(this).parents('li').removeClass('d-none');
+            } else {
+                $(this).addClass('d-none');
+            }
+        })
+
+        // if query is empty, show all
+        if (query === '') {
+            $('#category-tree li').removeClass('d-none');
+        }
     })
 </script>
 @endpush
