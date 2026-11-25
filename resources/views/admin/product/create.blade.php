@@ -128,7 +128,8 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <select name="status" class="form-control" id="">
-                                        <option value="published">Published</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
                                         <option value="draft">Draft</option>
                                         <option value="pending">Pending</option>
                                     </select>
@@ -375,7 +376,7 @@
             },
 
             error: function(xhr) {
-                console.log(xhr.responseJSON.errors);
+                console.log(xhr);
                 let errors = xhr.responseJSON.errors;
                 $.each(errors, function(key, value) {
                     notyf.alert(errors[key][0])
