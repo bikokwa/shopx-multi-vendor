@@ -48,7 +48,13 @@ class ProductController extends Controller
         $product->is_new = $request->has('is_new') ? 1 : 0;
         $product->brand_id = $request->brand;
         $product->save();
-        AlertService::created();
+
+        /** Attach categories */
+        $product->categories()->sync($request->categories);
+
+        /** Attach tags */
+        $product->tags()->sync($request->tags);
+
         return response()->json(['status' => 'success', 'message' => 'Product created successfully']);
     }
 }

@@ -350,41 +350,31 @@
     })
 
     $(function() {
-    $('.product-form').on('submit', function(e) {
-        e.preventDefault();
+        $('.product-form').on('submit', function(e) {
+            e.preventDefault();
 
-        let form = $(this);
-        let data = new FormData(form[0]);
+            let form = $(this);
+            let data = new FormData(form[0]);
 
-        // console.log('Form element:', form[0]);
-        // console.log('FormData object:', data);
-        // console.log('FormData entries:');
+            $.ajax({
+                url: "",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
 
-        // for (let [key, value] of data.entries()) {
-        //     console.log(key, value);
-        // }
+                success: function(response) {
+                    console.log(response);
+                },
 
-        $.ajax({
-            url: "",
-            method: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-
-            success: function(response) {
-                console.log(response);
-            },
-
-            error: function(xhr) {
-                console.log(xhr);
-                let errors = xhr.responseJSON.errors;
-                $.each(errors, function(key, value) {
-                    notyf.alert(errors[key][0])
-                })
-            }
+                error: function(xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        notyf.alert(errors[key][0])
+                    })
+                }
+            });
         });
-
     });
-});
 </script>
 @endpush
