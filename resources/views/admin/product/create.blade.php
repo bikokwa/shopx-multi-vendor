@@ -475,7 +475,7 @@
     // dropzone image upload
     Dropzone.autoDiscover = false;
     const imageUploader = new Dropzone("#imageUploader", {
-        url: "/",
+        url: "{{ route('admin.products.images.upload') }}",
         paramName: "Image",
         maxFileSize: 10,
         acceptedFiles: "image/*",
@@ -490,6 +490,13 @@
             this.on("addedfile", function(file) {
                 const placeholderId = 'upload-' + Date.now();
                 addUploadPlaceholder(placeholderId);
+                file.placeholderId = placeholderId;
+            })
+
+            this.on("success", function(file, response) {
+                $(`#${file.placeholderId}`).remove();
+                addImagePreview(response.path, file.placeholderId);
+                this.removeFile(file);
             })
         }
     })

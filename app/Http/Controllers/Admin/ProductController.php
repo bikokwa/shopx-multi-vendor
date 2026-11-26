@@ -10,11 +10,14 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tag;
 use App\Services\AlertService;
+use App\Traits\FileUploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use FileUploadTrait;
+
     function index(): View {
         return view('admin.product.index');
     }
@@ -56,5 +59,19 @@ class ProductController extends Controller
         $product->tags()->sync($request->tags);
 
         return response()->json(['status' => 'success', 'message' => 'Product created successfully']);
+    }
+
+    function uploadImages(Request $request) {
+        $request->validate([
+            'Image' => ['required', 'image', 'max:3048'],
+        ]);
+
+        $filePath = $this->uploadFile($request->file('Image'));
+
+        return response()->json([
+            'status' => 'success',
+            'path' => asset($filePath),
+            'message' => 'Image uploaded successfully'
+        ]);
     }
 }
