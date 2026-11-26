@@ -1,5 +1,86 @@
 @extends('admin.layouts.app')
 
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+<style>
+    /* Add these new styles */
+    .dropzone {
+        border: 2px dashed #ccc;
+        border-radius: 4px;
+        padding: 20px;
+        text-align: center;
+        background: #f8f9fa;
+        margin-bottom: 20px;
+    }
+
+    .dropzone.dz-drag-hover {
+        border-color: #2196F3;
+        background: #e3f2fd;
+    }
+
+    .image-preview-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .image-preview-item {
+        position: relative;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: move;
+    }
+
+    .image-preview-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .image-preview-item .remove-image {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: red;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+        cursor: pointer;
+    }
+
+    .image-preview-loader {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 1.5s infinite;
+    }
+
+    .image-preview-loader::after {
+        content: "Uploading...";
+        color: #666;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+    }
+</style>
+@endpush
+
 @section('contents')
     <div class="container-xl">
         <form action="" class="product-form">
@@ -114,6 +195,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3 class="card-title">Product Image</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <div id="imageUploader" class="dropzone"></div>
+                                    <div id="imagePreviewContainer" class="image-preview-container"></div>
                                 </div>
                             </div>
                         </div>
@@ -291,6 +385,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script>
     $(document).on('change', '.category-check', function() {
         const isChecked = $(this).is(':checked');
@@ -376,5 +471,46 @@
             });
         });
     });
+
+    // dropzone image upload
+    Dropzone.autoDiscover = false;
+    const imageUploader = new Dropzone("#imageUploader", {
+        url: "/",
+        paramName: "Image",
+        maxFileSize: 10,
+        acceptedFiles: "image/*",
+        addRemoveLinks: false,
+        autoProcessQueue: true,
+        uploadMultiple: false,
+        previewsContainer: false,
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        init: function() {
+            this.on("addedfile", function(file) {
+                const placeholderId = 'upload-' + Date.now();
+                addUploadPlaceholder(placeholderId);
+            })
+        }
+    })
+
+    function addUploadPlaceholder(placeholderId) {
+        const placeholderHtml = `
+            <div id="${placeholderId}" class="image-preview-item">
+                <div class="image-preview-loader"></div>
+            </div>
+        `;
+        $('#imagePreviewContainer').append(placeholderHtml);
+    }
+
+    function addImagePreview(path, id) {
+        const placeholderHtml = `
+            <div class="image-preview-item" data-image-id="${id}">
+                <img src="${path}">
+                <span class="remove-image" date-image-id="${id}">&times;</span>
+            </div>
+        `;
+        $('#imagePreviewContainer').append(placeholderHtml);
+    }
 </script>
 @endpush
