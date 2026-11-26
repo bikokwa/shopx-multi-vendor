@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Store;
 use App\Models\Tag;
 use App\Services\AlertService;
@@ -67,6 +68,12 @@ class ProductController extends Controller
         ]);
 
         $filePath = $this->uploadFile($request->file('Image'));
+
+        $productImage = new ProductImage();
+        $productImage->product_id = 1;
+        $productImage->path = $filePath;
+        $productImage->order = ProductImage::where('product_id', 1)->max('order') + 1;
+        $productImage->save();
 
         return response()->json([
             'status' => 'success',
