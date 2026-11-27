@@ -386,6 +386,7 @@
 
 @push('scripts')
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
     $(document).on('change', '.category-check', function() {
         const isChecked = $(this).is(':checked');
@@ -538,5 +539,41 @@
             }
         });
     });
+
+    // init sortable
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    new Sortable(imagePreviewContainer, {
+        animation: 150,
+        onEnd: function() {
+            updateImageOrder();
+        }
+    });
+
+    function updateImageOrder() {
+        const imageOrder = [];
+        $('.image-preview-item').each(function(index) {
+            imageOrder.push({
+                id: $(this).data('image-id'),
+                order: index
+            });
+        });
+
+        $.ajax({
+            url: "{{ route('admin.products.images.reorder') }}",
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            data: {
+                images: imageOrder
+            },
+            success: function(response) {
+
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        });
+    }
 </script>
 @endpush

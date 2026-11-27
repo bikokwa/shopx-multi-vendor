@@ -102,6 +102,7 @@ Route::middleware('auth:admin')
     Route::post('/products/physical/create', [ProductController::class, 'store'])->name('products.store');
     Route::post('/products/images/upload', [ProductController::class, 'uploadImages'])->name('products.images.upload');
     Route::delete('/products/images/{image}', [ProductController::class, 'destroyImage'])->name('products.images.destroy');
+    Route::post('/products/images/reorder', [ProductController::class, 'imagesReorder'])->name('products.images.reorder');
 
     /** Settings Routes */
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');

@@ -89,4 +89,10 @@ class ProductController extends Controller
         $image->delete();
         return response()->json(['status' => 'success', 'message' => 'Image deleted successfully']);
     }
+
+    function imagesReorder(Request $request) {
+        foreach($request->images as $image) {
+            ProductImage::where('id', $image['id'])->update(['order' => $image['order']]);
+        }
+    }
 }
