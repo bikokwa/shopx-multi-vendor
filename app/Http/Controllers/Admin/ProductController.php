@@ -59,10 +59,22 @@ class ProductController extends Controller
         /** Attach tags */
         $product->tags()->sync($request->tags);
 
-        return response()->json(['status' => 'success', 'message' => 'Product created successfully']);
+        return response()->json([
+            'id' => $product->id,
+            'status' => 'success', 
+            'message' => 'Product created successfully']);
     }
 
-    function uploadImages(Request $request) {
+    function edit(int $id) {
+        $product = Product::findOrFail($id);
+        $stores = Store::select(['name', 'id'])->get();
+        $brands = Brand::select(['name', 'id'])->where('is_active', 1)->get();
+        $tags = Tag::where('is_active', 1)->get();
+        $categories = Category::getNested();
+        return view('admin.product.edit', compact('product', 'stores', 'brands', 'tags', 'categories'));
+    }
+
+    function uploadImages(Request $request, Product $product) {
         $request->validate([
             'Image' => ['required', 'image', 'max:3048'],
         ]);
@@ -70,9 +82,9 @@ class ProductController extends Controller
         $filePath = $this->uploadFile($request->file('Image'));
 
         $productImage = new ProductImage();
-        $productImage->product_id = 1;
+        $productImage->product_id = $product->id;
         $productImage->path = $filePath;
-        $productImage->order = ProductImage::where('product_id', 1)->max('order') + 1;
+        $productImage->order = ProductImage::where('product_id', $product->id)->max('order') + 1;
         $productImage->save();
 
         return response()->json([

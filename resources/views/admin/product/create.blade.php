@@ -199,19 +199,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h3 class="card-title">Product Image</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <div id="imageUploader" class="dropzone"></div>
-                                    <div id="imagePreviewContainer" class="image-preview-container"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-3">
@@ -460,7 +447,9 @@
                 contentType: false,
 
                 success: function(response) {
-                    console.log(response);
+                    if (response.status == 'success') {
+                        window.location.href = "{{ route('admin.products.edit', ':id') }}".replace(':id', response.id)
+                    }
                 },
 
                 error: function(xhr) {
@@ -472,108 +461,5 @@
             });
         });
     });
-
-    // dropzone image upload
-    Dropzone.autoDiscover = false;
-    const imageUploader = new Dropzone("#imageUploader", {
-        url: "{{ route('admin.products.images.upload') }}",
-        paramName: "Image",
-        maxFileSize: 10,
-        acceptedFiles: "image/*",
-        addRemoveLinks: false,
-        autoProcessQueue: true,
-        uploadMultiple: false,
-        previewsContainer: false,
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        init: function() {
-            this.on("addedfile", function(file) {
-                const placeholderId = 'upload-' + Date.now();
-                addUploadPlaceholder(placeholderId);
-                file.placeholderId = placeholderId;
-            })
-
-            this.on("success", function(file, response) {
-                $(`#${file.placeholderId}`).remove();
-                addImagePreview(response.path, response.id);
-                this.removeFile(file);
-            })
-        }
-    })
-
-    function addUploadPlaceholder(placeholderId) {
-        const placeholderHtml = `
-            <div id="${placeholderId}" class="image-preview-item">
-                <div class="image-preview-loader"></div>
-            </div>
-        `;
-        $('#imagePreviewContainer').append(placeholderHtml);
-    }
-
-    function addImagePreview(path, id) {
-        const placeholderHtml = `
-            <div class="image-preview-item" data-image-id="${id}">
-                <img src="${path}">
-                <span class="remove-image" data-image-id="${id}">&times;</span>
-            </div>
-        `;
-        $('#imagePreviewContainer').append(placeholderHtml);
-    }
-
-    $(document).on('click', '.remove-image', function() {
-        const imageId = $(this).data('image-id');
-        const element = this;
-        $.ajax({
-            method: "DELETE",
-            url: "{{ route('admin.products.images.destroy', ':id') }}".replace(':id', imageId),
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function(response) {
-                notyf.confirm(response.message);
-                $(element).closest('.image-preview-item').remove();
-            },
-            error: function(xhr, status, error) {
-                notyf.alert(error);
-            }
-        });
-    });
-
-    // init sortable
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    new Sortable(imagePreviewContainer, {
-        animation: 150,
-        onEnd: function() {
-            updateImageOrder();
-        }
-    });
-
-    function updateImageOrder() {
-        const imageOrder = [];
-        $('.image-preview-item').each(function(index) {
-            imageOrder.push({
-                id: $(this).data('image-id'),
-                order: index
-            });
-        });
-
-        $.ajax({
-            url: "{{ route('admin.products.images.reorder') }}",
-            method: "POST",
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            data: {
-                images: imageOrder
-            },
-            success: function(response) {
-
-            },
-            error: function(xhr, status, error) {
-                
-            }
-        });
-    }
 </script>
 @endpush
