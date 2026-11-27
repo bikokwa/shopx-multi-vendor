@@ -495,7 +495,7 @@
 
             this.on("success", function(file, response) {
                 $(`#${file.placeholderId}`).remove();
-                addImagePreview(response.path, file.placeholderId);
+                addImagePreview(response.path, response.id);
                 this.removeFile(file);
             })
         }
@@ -514,10 +514,29 @@
         const placeholderHtml = `
             <div class="image-preview-item" data-image-id="${id}">
                 <img src="${path}">
-                <span class="remove-image" date-image-id="${id}">&times;</span>
+                <span class="remove-image" data-image-id="${id}">&times;</span>
             </div>
         `;
         $('#imagePreviewContainer').append(placeholderHtml);
     }
+
+    $(document).on('click', '.remove-image', function() {
+        const imageId = $(this).data('image-id');
+        const element = this;
+        $.ajax({
+            method: "DELETE",
+            url: "{{ route('admin.products.images.destroy', ':id') }}".replace(':id', imageId),
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                notyf.confirm(response.message);
+                $(element).closest('.image-preview-item').remove();
+            },
+            error: function(xhr, status, error) {
+                notyf.alert(error);
+            }
+        });
+    });
 </script>
 @endpush

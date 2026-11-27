@@ -77,8 +77,16 @@ class ProductController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'id' => $productImage->id,
             'path' => asset($filePath),
             'message' => 'Image uploaded successfully'
         ]);
+    }
+
+    function destroyImage(int $id) {
+        $image = ProductImage::findOrFail($id);
+        $this->deleteFile($image->path);
+        $image->delete();
+        return response()->json(['status' => 'success', 'message' => 'Image deleted successfully']);
     }
 }
