@@ -61,17 +61,19 @@ class ProductController extends Controller
 
         return response()->json([
             'id' => $product->id,
-            'status' => 'success', 
+            'status' => 'success',
             'message' => 'Product created successfully']);
     }
 
     function edit(int $id) {
         $product = Product::findOrFail($id);
+        $productCategoryIds = $product->categories->pluck('id')->toArray();
+        $productTagIds = $product->tags->pluck('id')->toArray();
         $stores = Store::select(['name', 'id'])->get();
         $brands = Brand::select(['name', 'id'])->where('is_active', 1)->get();
         $tags = Tag::where('is_active', 1)->get();
         $categories = Category::getNested();
-        return view('admin.product.edit', compact('product', 'stores', 'brands', 'tags', 'categories'));
+        return view('admin.product.edit', compact('product', 'productCategoryIds', 'productTagIds', 'stores', 'brands', 'tags', 'categories'));
     }
 
     function uploadImages(Request $request, Product $product) {

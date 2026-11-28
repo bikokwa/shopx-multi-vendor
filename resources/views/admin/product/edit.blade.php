@@ -92,28 +92,32 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label required">Name</label>
-                                    <input type="text" class="form-control" name="name" value="">
+                                    <input type="text" class="form-control" name="name" value="{{ $product->name }}">
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label required">Slug</label>
-                                    <input type="text" class="form-control" name="slug" value="">
+                                    <input type="text" class="form-control" name="slug" value="{{ $product->slug }}">
                                     <x-input-error :messages="$errors->get('slug')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label required">Short Description</label>
-                                    <textarea id="short-editor" name="short_description"></textarea>
+                                    <textarea id="short-editor" name="short_description">
+                                        {!! $product->short_description !!}
+                                    </textarea>
                                     <x-input-error :messages="$errors->get('short_description')" class="mt-2" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-label required">Description</label>
-                                    <textarea id="editor" name="description"></textarea>
+                                    <textarea id="editor" name="description">
+                                        {!! $product->description !!}
+                                    </textarea>
                                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                                 </div>
                             </div>
@@ -126,35 +130,35 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">SKU</label>
-                                        <input type="text" class="form-control" name="sku" value="">
+                                        <input type="text" class="form-control" name="sku" value="{{ $product->sku }}">
                                         <x-input-error :messages="$errors->get('sku')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Price</label>
-                                        <input type="text" class="form-control" name="price" value="">
+                                        <input type="text" class="form-control" name="price" value="{{ $product->price }}">
                                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Special Price</label>
-                                        <input type="text" class="form-control" name="special_price" value="">
+                                        <input type="text" class="form-control" name="special_price" value="{{ $product->special_price }}">
                                         <x-input-error :messages="$errors->get('special_price')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">From Date</label>
-                                        <input type="text" class="form-control datepicker" name="from_date" value="">
+                                        <input type="text" class="form-control datepicker" name="from_date" value="{{ $product->special_price_start }}">
                                         <x-input-error :messages="$errors->get('from_date')" class="mt-2" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">To Date</label>
-                                        <input type="text" class="form-control datepicker" name="to_date" value="">
+                                        <input type="text" class="form-control datepicker" name="to_date" value="{{ $product->special_price_end }}">
                                         <x-input-error :messages="$errors->get('to_date')" class="mt-2" />
                                     </div>
                                 </div>
@@ -162,15 +166,15 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-check">
-                                                <input type="checkbox" class="form-check-input manage-stock-check" name="manage_stock">
+                                                <input type="checkbox" class="form-check-input manage-stock-check" name="manage_stock" @checked($product->manage_stock == 'yes')>
                                                 <span class="form-check-label">Manage Stock</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 manage-stock d-none">
+                                    <div class="col-md-12 manage-stock {{ $product->manage_stock == 'yes' ? '' : 'd-none' }}">
                                         <div class="mb-3">
                                             <label class="form-label">Quantity</label>
-                                            <input type="text" class="form-control" name="quantity" value="">
+                                            <input type="text" class="form-control" name="quantity" value="{{ $product->qty }}">
                                             <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
                                         </div>
                                     </div>
@@ -184,11 +188,11 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <label class="form-check">
-                                                        <input type="radio" name="stock_status" class="form-check-input" value="in_stock">
+                                                        <input type="radio" name="stock_status" class="form-check-input" value="in_stock" @checked($product->in_stock == 1)>
                                                         <span class="form-check-label">In Stock</span>
                                                     </label>
                                                     <label class="form-check">
-                                                        <input type="radio" name="stock_status" class="form-check-input" value="out_of_stock">
+                                                        <input type="radio" name="stock_status" class="form-check-input" value="out_of_stock" @checked($product->in_stock == 0)>
                                                         <span class="form-check-label">Out Of Stock</span>
                                                     </label>
                                                 </div>
@@ -229,10 +233,10 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <select name="status" class="form-control" id="">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                        <option value="draft">Draft</option>
-                                        <option value="pending">Pending</option>
+                                        <option @selected($product->status == 'active') value="active">Active</option>
+                                        <option @selected($product->status == 'inactive') value="inactive">Inactive</option>
+                                        <option @selected($product->status == 'draft') value="draft">Draft</option>
+                                        <option @selected($product->status == 'pending') value="pending">Pending</option>
                                     </select>
                                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
                                 </div>
@@ -249,7 +253,7 @@
                                     <select name="store" class="form-control select2" id="">
                                         <option value="">Select a store</option>
                                         @foreach ($stores as $store)
-                                            <option value="{{ $store->id }}">{{ $store->name }}</option>
+                                            <option @selected($product->store_id == $store->id ) value="{{ $store->id }}">{{ $store->name }}</option>
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('store')" class="mt-2" />
@@ -265,7 +269,7 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-check form-switch form-switch-3">
-                                        <input type="checkbox" class="form-check-input" name="is_featured">
+                                        <input type="checkbox" class="form-check-input" name="is_featured" @checked($product->is_featured == 1)>
                                         <span class="form-check-label">Enable</span>
                                     </label>
                                     <x-input-error :messages="$errors->get('is_featured')" class="mt-2" />
@@ -287,7 +291,7 @@
                                         @foreach ($categories as $category)
                                         <li>
                                             <label for="" class="form-check category-wrapper">
-                                                <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $category->id }}">
+                                                <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $category->id }}" @checked(in_array($category->id, $productCategoryIds))>
                                                 <span class="form-check-label category-label">{{ $category->name }}</span>
                                             </label>
                                             @if ($category->children_nested && $category->children_nested->count() > 0)
@@ -295,7 +299,7 @@
                                                 @foreach ($category->children_nested as $child)
                                                 <li>
                                                     <label for="" class="form-check category-wrapper">
-                                                        <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $child->id }}">
+                                                        <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $child->id }}" @checked(in_array($child->id, $productCategoryIds))>
                                                         <span class="form-check-label category-label">{{ $child->name }}</span>
                                                     </label>
                                                     @if ($child->children_nested && $child->children_nested->count() > 0)
@@ -303,7 +307,7 @@
                                                         @foreach ($child->children_nested as $subChild)
                                                         <li>
                                                             <label for="" class="form-check category-wrapper">
-                                                                <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $subChild->id }}">
+                                                                <input type="checkbox" class="form-check-input category-check" name="categories[]" value="{{ $subChild->id }}" @checked(in_array($subChild->id, $productCategoryIds))>
                                                                 <span class="form-check-label category-label">{{ $subChild->name }}</span>
                                                             </label>
                                                         </li>
@@ -331,7 +335,7 @@
                                     <select name="brand" class="form-control select2" id="">
                                         <option value="">Select a brand</option>
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            <option value="{{ $brand->id }}" @selected($product->brand_id == $brand->id)>{{ $brand->name }}</option>
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('brand')" class="mt-2" />
@@ -347,14 +351,13 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="is_hot">
+                                        <input type="checkbox" class="form-check-input" name="is_hot" @checked($product->is_hot)>
                                         <span class="form-check-label">Hot</span>
                                     </label>
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="is_new">
+                                        <input type="checkbox" class="form-check-input" name="is_new" @checked($product->is_new)>
                                         <span class="form-check-label">New</span>
                                     </label>
-                                    <x-input-error :messages="$errors->get('label')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -368,7 +371,7 @@
                                 <div class="mb-3">
                                     <select name="tags[]" class="form-control select2" multiple="multiple" id="">
                                         @foreach ($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                            <option value="{{ $tag->id }}" @selected(in_array($tag->id, $productTagIds))>{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('tags')" class="mt-2" />
